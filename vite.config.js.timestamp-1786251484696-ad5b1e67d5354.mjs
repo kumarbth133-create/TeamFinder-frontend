@@ -7,11 +7,11 @@ var vite_config_default = defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
+        target: "team-finder-backend.vercel.app",
         changeOrigin: true
       },
       "/uploads": {
-        target: "http://localhost:5000",
+        target: "team-finder-backend.vercel.app",
         changeOrigin: true
       }
     }
