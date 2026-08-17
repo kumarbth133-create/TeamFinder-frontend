@@ -11,22 +11,17 @@ const ThemeToggle = ({ className = "" }) => {
       type="button"
       aria-label="Toggle theme mode"
       title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
-      className={`relative inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 shadow-sm border ${
+      className={`relative inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300 border shadow-xs select-none cursor-pointer active:scale-95 ${
         isDark
-          ? "bg-dark-800/80 hover:bg-dark-750 text-primary-300 border-primary-600/30 hover:border-primary-500/60 shadow-dark-950/20"
-          : "bg-white/90 hover:bg-white text-primary-700 border-primary-400 hover:border-primary-600 shadow-gray-200/80"
-      } backdrop-blur-md cursor-pointer group active:scale-95 ${className}`}
+          ? "bg-dark-800 hover:bg-dark-700 text-amber-300 border-dark-600 shadow-black/40"
+          : "bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-slate-200/80"
+      } ${className}`}
     >
-      <span className="relative flex items-center justify-center w-5 h-5 rounded-full transition-transform duration-300">
-        {isDark ? (
-          <FiSun className="w-4 h-4 text-amber-400 transform group-hover:rotate-45 transition-transform duration-300" />
-        ) : (
-          <FiMoon className="w-4 h-4 text-primary-500 transform group-hover:-rotate-12 transition-transform duration-300" />
-        )}
-      </span>
-      <span className="hidden sm:inline-block">
-        {isDark ? "" : ""}
-      </span>
+      {isDark ? (
+        <FiSun className="w-4 h-4 text-amber-400 transition-transform duration-300 hover:rotate-45" />
+      ) : (
+        <FiMoon className="w-4 h-4 text-indigo-600 transition-transform duration-300 hover:-rotate-12" />
+      )}
     </button>
   );
 };

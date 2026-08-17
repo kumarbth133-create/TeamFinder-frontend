@@ -1,9 +1,10 @@
-﻿import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Spinner from "../../components/common/Spinner";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import AppLogo from "../../components/common/AppLogo";
+import API from "../../api/axios";
 import { FiMail, FiLock, FiEye, FiEyeOff, FiUsers, FiFolder, FiCheckCircle, FiShield } from "react-icons/fi";
 
 const Login = () => {
@@ -12,6 +13,24 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [stats, setStats] = useState({ totalStudents: 0, totalProjects: 0 });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const { data } = await API.get("/auth/stats");
+        if (data?.success && data?.data) {
+          setStats({
+            totalStudents: data.data.totalStudents || 0,
+            totalProjects: data.data.totalProjects || 0,
+          });
+        }
+      } catch {
+        /* fallback to default */
+      }
+    };
+    fetchStats();
+  }, []);
 
   const validate = () => {
     const errs = {};
@@ -74,8 +93,8 @@ const Login = () => {
           {/* Simple Clean Stats */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             {[
-              { val: "500+", label: "Students", icon: FiUsers },
-              { val: "120+", label: "Projects", icon: FiFolder },
+              { val: stats.totalStudents, label: "Students", icon: FiUsers },
+              { val: stats.totalProjects, label: "Projects", icon: FiFolder },
             ].map((s) => {
               const Icon = s.icon;
               return (

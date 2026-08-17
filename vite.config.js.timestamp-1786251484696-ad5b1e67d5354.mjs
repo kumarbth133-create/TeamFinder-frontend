@@ -11,7 +11,7 @@ var vite_config_default = defineConfig({
         changeOrigin: true
       },
       "/uploads": {
-        target: "team-finder-backend.vercel.app",
+        target: "http://localhost:5000",
         changeOrigin: true
       }
     }

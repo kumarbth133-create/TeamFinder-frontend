@@ -7,11 +7,11 @@ export default defineConfig({
     port: 5173,
     proxy: {
       "/api": {
-        target: "team-finder-backend.vercel.app",
+        target: "http://localhost:5000",
         changeOrigin: true,
       },
       "/uploads": {
-        target: "team-finder-backend.vercel.app",
+        target: "http://localhost:5000",
         changeOrigin: true,
       },
     },

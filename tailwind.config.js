@@ -5,14 +5,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Dark teal theme — base: #094140
+        // Pitch Black dark theme — base: #000000
         dark: {
-          900: "#050e0e",   // deepest bg
-          800: "#081919",   // sidebar bg
-          750: "#0b2222",   // card bg
-          700: "#0d2b2b",   // elevated card
-          600: "#123535",   // border/hover
-          500: "#184444",   // subtle divider
+          950: "#000000",   // absolute pitch black
+          900: "#000000",   // main app bg (pitch black)
+          800: "#09090b",   // sidebar & header bg
+          750: "#121215",   // main card bg
+          700: "#18181b",   // elevated card / input bg
+          600: "#27272a",   // borders / hover state
+          500: "#3f3f46",   // subtle divider
         },
         primary: {
           50:  "#e8f7f7",   // lightest teal tint

@@ -54,7 +54,7 @@ const SnakeGame = () => {
     const ctx = canvas.getContext("2d");
 
     // Background
-    ctx.fillStyle = "#050e0e";
+    ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
     // Grid lines (subtle)
@@ -112,7 +112,7 @@ const SnakeGame = () => {
         ctx.shadowBlur = 0;
 
         // Eyes
-        ctx.fillStyle = "#050e0e";
+        ctx.fillStyle = "#000000";
         const eyeSize = 3;
         const dir = dirRef.current;
         if (dir.x === 1) {
