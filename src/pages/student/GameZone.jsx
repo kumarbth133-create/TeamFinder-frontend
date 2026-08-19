@@ -77,58 +77,37 @@ const GameZone = () => {
   return (
     <MainLayout>
       <div className="space-y-6">
-        {/* Hero Banner */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-900/40 via-dark-800 to-cyan-950/30 p-6 sm:p-8 border border-purple-800/30">
-          {/* Background decorative elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl" />
-
-          <div className="relative">
-            <div className="flex items-center gap-2 text-purple-400 font-semibold text-sm mb-2">
-              <FiZap size={18} className="text-cyan-400" />
-              <span>TeamUp Game Zone</span>
-              <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full border border-purple-500/30 ml-1">
-                New ✨
-              </span>
+        {/* Hero Banner (Vibrant Crimson Gradient Banner matching Dashboard) */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#990012] via-[#ca0019] to-[#e6001c] text-white py-4 px-5 sm:py-5 sm:px-6 shadow-lg shadow-[#ca0019]/25 border border-white/20 hover:shadow-xl hover:shadow-[#ca0019]/30 transition-all duration-300">
+          <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4 z-10">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-2xl bg-white/15 text-white border border-white/30 backdrop-blur-sm flex items-center justify-center shrink-0 shadow-sm">
+                <FiZap size={24} />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-white/90">
+                    TeamUp Game Zone
+                  </span>
+                  <span className="text-[10px] bg-white/20 text-white px-2.5 py-0.5 rounded-full font-bold border border-white/30">
+                    Interactive Fun ✨
+                  </span>
+                </div>
+                <h1 className="text-xl sm:text-2xl font-black text-white leading-tight">
+                  Take a Break, Play & Connect!
+                </h1>
+              </div>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">
-              Take a Break, Play & Connect! 🎮
-            </h1>
-            <p className="text-sm dark:text-gray-400 text-slate-500 max-w-2xl">
-              Coding breaks are important! Challenge your fellow developers to quick games.
-              Play <span className="text-purple-400 font-semibold">solo</span> to sharpen your skills or{" "}
-              <span className="text-cyan-400 font-semibold">TeamUp</span> with room codes — share with any developer and play together in real-time!
-            </p>
 
-            {/* Quick Stats */}
-            <div className="flex flex-wrap gap-4 mt-5">
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-lg bg-purple-500/20 border border-purple-500/30 flex items-center justify-center">
-                  <FiCpu size={14} className="text-purple-400" />
-                </div>
-                <div>
-                  <p className="font-bold dark:text-gray-200 text-slate-700">4 Games</p>
-                  <p className="dark:text-gray-500 text-slate-400">Ready to play</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center">
-                  <FiUsers size={14} className="text-cyan-400" />
-                </div>
-                <div>
-                  <p className="font-bold dark:text-gray-200 text-slate-700">3 Multiplayer</p>
-                  <p className="dark:text-gray-500 text-slate-400">TeamUp enabled</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-xs">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/30 flex items-center justify-center">
-                  <FiTarget size={14} className="text-amber-400" />
-                </div>
-                <div>
-                  <p className="font-bold dark:text-gray-200 text-slate-700">Score Tracking</p>
-                  <p className="dark:text-gray-500 text-slate-400">Local leaderboard</p>
-                </div>
-              </div>
+            {/* Quick Stats Badges inside Banner */}
+            <div className="flex items-center gap-2 shrink-0">
+              <span className="px-3 py-1.5 rounded-xl bg-white/15 border border-white/25 text-xs font-bold text-white flex items-center gap-1.5">
+                <FiCpu size={14} /> 4 Games
+              </span>
+              <span className="px-3 py-1.5 rounded-xl bg-white/15 border border-white/25 text-xs font-bold text-white flex items-center gap-1.5">
+                <FiUsers size={14} /> 3 Multiplayer
+              </span>
             </div>
           </div>
         </div>
@@ -136,29 +115,29 @@ const GameZone = () => {
         {/* How TeamUp Works */}
         <div className="card">
           <h2 className="text-sm font-bold dark:text-gray-200 text-slate-800 mb-3 flex items-center gap-2">
-            <FiUsers size={16} className="text-cyan-400" />
+            <FiUsers size={16} className="text-[#ca0019]" />
             How TeamUp Multiplayer Works
           </h2>
           <div className="grid sm:grid-cols-3 gap-3">
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-dark-800 dark:bg-dark-800 border border-dark-600">
-              <span className="text-lg">1️⃣</span>
+            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white dark:bg-dark-800 border border-slate-200/90 dark:border-dark-600 hover:border-[#ca0019]/60 hover:shadow-md hover:shadow-[#ca0019]/15 hover:scale-[1.008] transition-all duration-300 group">
+              <span className="w-6 h-6 rounded-lg bg-[#ca0019]/10 text-[#ca0019] dark:bg-[#ca0019]/20 dark:text-rose-400 group-hover:bg-[#ca0019] group-hover:text-white flex items-center justify-center font-bold text-xs shrink-0 border border-[#ca0019]/30 transition-all">1</span>
               <div>
-                <p className="text-xs font-bold dark:text-gray-200 text-slate-700">Create Room</p>
-                <p className="text-xs dark:text-gray-500 text-slate-400">Click "Play" → choose "Create Room" to get a 6-digit code</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-[#ca0019] transition-colors">Create Room</p>
+                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5">Click "Play" → choose "Create Room" to get a 6-digit code</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-dark-800 dark:bg-dark-800 border border-dark-600">
-              <span className="text-lg">2️⃣</span>
+            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white dark:bg-dark-800 border border-slate-200/90 dark:border-dark-600 hover:border-[#ca0019]/60 hover:shadow-md hover:shadow-[#ca0019]/15 hover:scale-[1.008] transition-all duration-300 group">
+              <span className="w-6 h-6 rounded-lg bg-[#ca0019]/10 text-[#ca0019] dark:bg-[#ca0019]/20 dark:text-rose-400 group-hover:bg-[#ca0019] group-hover:text-white flex items-center justify-center font-bold text-xs shrink-0 border border-[#ca0019]/30 transition-all">2</span>
               <div>
-                <p className="text-xs font-bold dark:text-gray-200 text-slate-700">Share Code</p>
-                <p className="text-xs dark:text-gray-500 text-slate-400">Send the room code to your friend / teammate</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-[#ca0019] transition-colors">Share Code</p>
+                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5">Send the room code to your friend / teammate</p>
               </div>
             </div>
-            <div className="flex items-start gap-3 p-3 rounded-xl bg-dark-800 dark:bg-dark-800 border border-dark-600">
-              <span className="text-lg">3️⃣</span>
+            <div className="flex items-start gap-3 p-3.5 rounded-xl bg-white dark:bg-dark-800 border border-slate-200/90 dark:border-dark-600 hover:border-[#ca0019]/60 hover:shadow-md hover:shadow-[#ca0019]/15 hover:scale-[1.008] transition-all duration-300 group">
+              <span className="w-6 h-6 rounded-lg bg-[#ca0019]/10 text-[#ca0019] dark:bg-[#ca0019]/20 dark:text-rose-400 group-hover:bg-[#ca0019] group-hover:text-white flex items-center justify-center font-bold text-xs shrink-0 border border-[#ca0019]/30 transition-all">3</span>
               <div>
-                <p className="text-xs font-bold dark:text-gray-200 text-slate-700">Play Together!</p>
-                <p className="text-xs dark:text-gray-500 text-slate-400">They enter the code and you both play in real-time</p>
+                <p className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-[#ca0019] transition-colors">Play Together!</p>
+                <p className="text-xs text-slate-600 dark:text-gray-400 mt-0.5">They enter the code and you both play in real-time</p>
               </div>
             </div>
           </div>

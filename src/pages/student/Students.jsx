@@ -50,12 +50,12 @@ const Students = () => {
   return (
     <MainLayout>
       <div className="space-y-5">
-        <h1 className="text-xl font-bold text-white">Find Students</h1>
+        <h1 className="text-xl font-bold dark:text-white text-slate-900">Find Students</h1>
 
         <div className="card space-y-3">
           <form onSubmit={handleSearch} className="flex gap-2">
             <div className="relative flex-1">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500" size={14} />
               <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by name or college..." className="input-field pl-9" />
             </div>
@@ -78,7 +78,7 @@ const Students = () => {
               {activeSkills.map((s) => (
                 <span key={s} className="flex items-center gap-1 badge">
                   {s}
-                  <button onClick={() => removeSkillFilter(s)}><FiX size={11} /></button>
+                  <button onClick={() => removeSkillFilter(s)} className="hover:text-primary-700 dark:hover:text-primary-200 ml-0.5"><FiX size={11} /></button>
                 </span>
               ))}
             </div>
@@ -91,7 +91,7 @@ const Students = () => {
           <EmptyState icon="👥" title="No students found" description="Try different search terms or filters" />
         ) : (
           <>
-            <p className="text-xs text-gray-500">{students.length} student{students.length !== 1 ? "s" : ""} found</p>
+            <p className="text-xs text-slate-500 dark:text-gray-400">{students.length} student{students.length !== 1 ? "s" : ""} found</p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {students.map((student) => (
                 <div key={student._id} className="card-hover">
@@ -99,41 +99,41 @@ const Students = () => {
                     <Avatar src={student.profilePicture} name={student.name} size="md" />
                     <div className="flex-1 min-w-0">
                       <Link to={`/students/${student._id}`}
-                        className="font-semibold text-gray-100 hover:text-green-400 transition block truncate text-sm">
+                        className="font-semibold text-slate-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition block truncate text-sm">
                         {student.name}
                       </Link>
-                      {student.college && <p className="text-xs text-gray-500 truncate">📍 {student.college}</p>}
+                      {student.college && <p className="text-xs text-slate-500 dark:text-gray-400 truncate">📍 {student.college}</p>}
                     </div>
                   </div>
 
-                  {student.bio && <p className="text-xs text-gray-500 line-clamp-2 mb-3">{student.bio}</p>}
+                  {student.bio && <p className="text-xs text-slate-600 dark:text-gray-400 line-clamp-2 mb-3">{student.bio}</p>}
 
                   {student.skills?.length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-3">
                       {student.skills.slice(0, 4).map((s) => <SkillBadge key={s} skill={s} />)}
                       {student.skills.length > 4 && (
-                        <span className="text-xs text-gray-600">+{student.skills.length - 4}</span>
+                        <span className="text-xs text-slate-500 dark:text-gray-400">+{student.skills.length - 4}</span>
                       )}
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between pt-3 border-t border-dark-600">
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-dark-600">
                     <div className="flex gap-3">
                       {student.githubLink && (
                         <a href={student.githubLink} target="_blank" rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-green-400 transition">
+                          className="text-slate-400 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition">
                           <FiGithub size={15} />
                         </a>
                       )}
                       {student.linkedinLink && (
                         <a href={student.linkedinLink} target="_blank" rel="noopener noreferrer"
-                          className="text-gray-500 hover:text-green-400 transition">
+                          className="text-slate-400 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition">
                           <FiLinkedin size={15} />
                         </a>
                       )}
                     </div>
                     <Link to={`/students/${student._id}`}
-                      className="text-xs text-green-400 hover:text-green-300 flex items-center gap-1 transition">
+                      className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 transition font-bold">
                       View Profile <FiArrowRight size={11} />
                     </Link>
                   </div>

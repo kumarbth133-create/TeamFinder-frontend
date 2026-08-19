@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import API from "../../api/axios";
 import toast from "react-hot-toast";
 import AdminLayout from "../../components/layout/AdminLayout";
@@ -38,11 +38,11 @@ const AdminProjects = () => {
   return (
     <AdminLayout>
       <div className="space-y-5">
-        <h1 className="text-xl font-bold text-white">Manage Projects</h1>
+        <h1 className="text-xl font-bold dark:text-white text-slate-900">Manage Projects</h1>
 
         <form onSubmit={(e) => { e.preventDefault(); fetchProjects(search); }} className="flex gap-2 max-w-md">
           <div className="relative flex-1">
-            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500" size={14} />
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
               placeholder="Search projects..." className="input-field pl-9" />
           </div>
@@ -53,8 +53,8 @@ const AdminProjects = () => {
           <div className="flex justify-center py-20"><Spinner size="lg" /></div>
         ) : (
           <div className="card p-0 overflow-hidden">
-            <div className="px-5 py-3 border-b border-dark-600">
-              <p className="text-xs text-gray-500">{projects.length} projects</p>
+            <div className="px-5 py-3 border-b border-slate-200 dark:border-dark-600">
+              <p className="text-xs text-slate-500 dark:text-gray-400">{projects.length} projects</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -73,34 +73,34 @@ const AdminProjects = () => {
                   {projects.map((project) => (
                     <tr key={project._id} className="table-row">
                       <td className="table-cell">
-                        <p className="font-medium text-gray-200 text-sm max-w-40 truncate">{project.title}</p>
+                        <p className="font-medium text-slate-900 dark:text-gray-200 text-sm max-w-40 truncate">{project.title}</p>
                       </td>
                       <td className="table-cell">
-                        <p className="text-gray-300 text-sm">{project.owner?.name}</p>
-                        <p className="text-gray-600 text-xs">{project.owner?.email}</p>
+                        <p className="text-slate-800 dark:text-gray-300 text-sm font-medium">{project.owner?.name}</p>
+                        <p className="text-slate-400 dark:text-gray-500 text-xs">{project.owner?.email}</p>
                       </td>
                       <td className="table-cell">
-                        <span className="flex items-center gap-1 text-gray-400 text-xs">
+                        <span className="flex items-center gap-1 text-slate-500 dark:text-gray-400 text-xs">
                           <FiUsers size={11} /> {project.teamMembers?.length}/{project.maxMembers}
                         </span>
                       </td>
                       <td className="table-cell">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          project.status === "open" ? "bg-primary-800/50 text-green-400" :
-                          project.status === "closed" ? "bg-red-900/50 text-red-400" : "bg-gray-800 text-gray-500"
+                          project.status === "open" ? "bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 border border-primary-200 dark:border-primary-800/40" :
+                          project.status === "closed" ? "bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400" : "bg-slate-100 text-slate-700 dark:bg-gray-800 dark:text-gray-400"
                         }`}>{project.status}</span>
                       </td>
                       <td className="table-cell">
                         <span className={`text-xs px-2 py-0.5 rounded-full ${
-                          project.isActive ? "bg-primary-800/50 text-green-400" : "bg-gray-800 text-gray-500"
+                          project.isActive ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400" : "bg-slate-100 text-slate-700 dark:bg-gray-800 dark:text-gray-500"
                         }`}>{project.isActive ? "Yes" : "No"}</span>
                       </td>
-                      <td className="table-cell text-gray-600 text-xs">
+                      <td className="table-cell text-slate-400 dark:text-gray-500 text-xs">
                         {new Date(project.createdAt).toLocaleDateString()}
                       </td>
                       <td className="table-cell text-right">
                         <button onClick={() => setDeleteTarget(project)}
-                          className="text-gray-600 hover:text-red-400 transition p-1">
+                          className="text-slate-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition p-1">
                           <FiTrash2 size={15} />
                         </button>
                       </td>
@@ -109,7 +109,7 @@ const AdminProjects = () => {
                 </tbody>
               </table>
               {projects.length === 0 && (
-                <div className="text-center py-12 text-gray-600 text-sm">No projects found</div>
+                <div className="text-center py-12 text-slate-500 dark:text-gray-400 text-sm">No projects found</div>
               )}
             </div>
           </div>

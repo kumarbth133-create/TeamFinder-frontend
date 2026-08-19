@@ -1,11 +1,21 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import toast from "react-hot-toast";
 import Spinner from "../../components/common/Spinner";
 import ThemeToggle from "../../components/common/ThemeToggle";
 import AppLogo from "../../components/common/AppLogo";
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowLeft, FiCheckCircle, FiShield, FiKey } from "react-icons/fi";
+import signupImg from "../../assets/signup.png";
+import {
+  FiMail,
+  FiLock,
+  FiEye,
+  FiEyeOff,
+  FiArrowLeft,
+  FiArrowRight,
+  FiKey,
+  FiCheckCircle,
+} from "react-icons/fi";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -64,195 +74,347 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-6 relative transition-colors duration-300 dark:bg-dark-900 bg-slate-50 text-slate-800 dark:text-gray-100">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden flex items-center justify-center bg-slate-950 text-slate-900 font-sans select-none">
       
-      {/* Top Bar Theme Switcher */}
-      <div className="absolute top-5 right-5 z-50">
-        <ThemeToggle />
-      </div>
+      {/* ── Minimal Top Back Button ── */}
+      <Link
+        to="/register?mode=login"
+        className="absolute top-5 left-5 z-40 w-10 h-10 rounded-full bg-white/85 dark:bg-slate-900/85 backdrop-blur-md flex items-center justify-center text-slate-800 dark:text-white hover:text-[#ca0019] hover:scale-105 active:scale-95 shadow-md border border-white/40 transition-all cursor-pointer"
+        title="Back to Login"
+      >
+        <FiArrowLeft size={18} />
+      </Link>
 
-      <div className="w-full max-w-md relative z-10">
-        
-        {/* Header Logo */}
-        <div className="flex items-center justify-center gap-3 mb-6">
-          <AppLogo size="md" />
-          <span className="text-2xl font-bold tracking-tight dark:text-white text-slate-900">
-            Team<span className="text-primary-600">Up</span>
-          </span>
-        </div>
+      {/* ── Immersive Full-Screen 3D Illustration Canvas ── */}
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
 
-        {/* Card Container */}
-        <div className="p-8 rounded-2xl border dark:bg-dark-800 dark:border-white/10 bg-white border-slate-200 shadow-sm">
+        {/* 3D Background Image with Reduced Opacity */}
+        <img
+          src={signupImg}
+          alt="TeamUp 3D Forgot Password Scene"
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none opacity-40"
+        />
+
+        {/* Scaled Coordinate Frame for Card Alignment */}
+        <div className="relative w-full h-full max-w-[177.78vh] aspect-[16/9] flex items-center justify-center pointer-events-none">
           
-          {/* STEP 1: VERIFY EMAIL */}
-          {step === 1 && (
-            <div>
-              <div className="mb-6 text-center">
-                <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-800/40 text-primary-600 dark:text-primary-400 flex items-center justify-center mx-auto mb-3 text-xl">
-                  <FiKey />
-                </div>
-                <h1 className="text-2xl font-bold tracking-tight dark:text-white text-slate-900">
-                  Forgot Password?
-                </h1>
-                <p className="text-xs dark:text-gray-400 text-slate-500 mt-1">
-                  Enter your registered email address to reset your password.
-                </p>
-              </div>
-
-              <form onSubmit={handleVerifyEmail} className="space-y-4" noValidate>
-                {error && (
-                  <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-xs p-3 rounded-xl">
-                    ⚠️ {error}
+          {/* ── Interactive Card Overlay on Desktop/Tablet ── */}
+          <div
+            className="hidden md:flex absolute z-20 bg-white rounded-[18px] lg:rounded-[24px] px-5 lg:px-7 py-4 lg:py-5 flex-col justify-between shadow-xs select-none pointer-events-auto"
+            style={{
+              top: "29.2%",
+              left: "32.2%",
+              width: "35.6%",
+              height: "60.3%",
+            }}
+          >
+            {/* STEP 1: VERIFY EMAIL */}
+            {step === 1 && (
+              <>
+                <div className="text-center">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-[#ca0019] text-white flex items-center justify-center mx-auto text-base lg:text-lg shadow-sm mb-1">
+                    <FiKey />
                   </div>
-                )}
-
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider dark:text-gray-300 text-slate-700 mb-1.5">
-                    Registered Email
-                  </label>
-                  <div className="relative">
-                    <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-gray-400 text-slate-400" size={16} />
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        setError("");
-                      }}
-                      placeholder="student@college.edu"
-                      className="input-field pl-10"
-                    />
-                  </div>
+                  <h2 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 leading-tight">
+                    Reset Password
+                  </h2>
+                  <p className="text-[10px] lg:text-xs text-slate-500 font-medium mt-0.5">
+                    Enter your registered email to reset your password
+                  </p>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-primary w-full py-2.5 font-semibold"
-                >
-                  {loading ? <Spinner size="sm" /> : "Verify Email"}
-                </button>
-              </form>
+                <form onSubmit={handleVerifyEmail} className="space-y-2 lg:space-y-3 my-auto" noValidate>
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 text-[10px] sm:text-xs p-2 rounded-xl font-medium">
+                      ⚠️ {error}
+                    </div>
+                  )}
 
-              <div className="mt-6 pt-4 border-t dark:border-white/10 border-slate-100 text-center">
-                <Link
-                  to="/login"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-600 dark:text-primary-400 hover:underline"
-                >
-                  <FiArrowLeft size={14} /> Back to Sign In
-                </Link>
-              </div>
-            </div>
-          )}
-
-          {/* STEP 2: RESET PASSWORD */}
-          {step === 2 && (
-            <div>
-              <div className="mb-6 text-center">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary-100 dark:bg-primary-800/40 text-primary-700 dark:text-primary-300 mb-3 border border-primary-200/60">
-                  <FiCheckCircle className="text-primary-600" /> Account Verified
-                </div>
-                <h1 className="text-2xl font-bold tracking-tight dark:text-white text-slate-900">
-                  Create New Password
-                </h1>
-                <p className="text-xs dark:text-gray-400 text-slate-500 mt-1">
-                  Enter a new strong password for <span className="font-semibold text-slate-700 dark:text-gray-300">{email}</span>
-                </p>
-              </div>
-
-              <form onSubmit={handleResetPassword} className="space-y-4" noValidate>
-                {error && (
-                  <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-xs p-3 rounded-xl">
-                    ⚠️ {error}
+                  <div>
+                    <div className="relative">
+                      <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setError("");
+                        }}
+                        placeholder="Registered Email Address"
+                        className="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-2 pl-9 pr-3 text-xs lg:text-sm focus:outline-none focus:border-[#ca0019] focus:ring-1 focus:ring-[#ca0019] transition-all"
+                      />
+                    </div>
                   </div>
-                )}
 
-                {/* New Password */}
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider dark:text-gray-300 text-slate-700 mb-1.5">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-2 lg:py-2.5 bg-[#ca0019] hover:bg-[#b00015] text-white font-bold rounded-xl shadow-md shadow-red-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 text-xs lg:text-sm cursor-pointer"
+                  >
+                    {loading ? <Spinner size="sm" /> : <><span>Verify Email</span> <FiArrowRight size={15} /></>}
+                  </button>
+                </form>
+
+                <div className="text-center pt-1">
+                  <Link
+                    to="/register?mode=login"
+                    className="text-xs font-semibold text-[#ca0019] hover:underline inline-flex items-center gap-1"
+                  >
+                    <FiArrowLeft size={13} /> Back to Sign In
+                  </Link>
+                </div>
+              </>
+            )}
+
+            {/* STEP 2: RESET PASSWORD */}
+            {step === 2 && (
+              <>
+                <div className="text-center">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-[#ca0019] text-white flex items-center justify-center mx-auto text-base lg:text-lg shadow-sm mb-1">
+                    <FiLock />
+                  </div>
+                  <h2 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 leading-tight">
                     New Password
-                  </label>
-                  <div className="relative">
-                    <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-gray-400 text-slate-400" size={16} />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      value={passwords.newPassword}
-                      onChange={(e) => {
-                        setPasswords({ ...passwords, newPassword: e.target.value });
-                        setError("");
-                      }}
-                      placeholder="At least 6 characters"
-                      className="input-field pl-10 pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-gray-400 text-slate-400 hover:text-primary-600 transition-colors"
-                    >
-                      {showPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
-                    </button>
-                  </div>
+                  </h2>
+                  <p className="text-[10px] lg:text-xs text-slate-500 font-medium mt-0.5 truncate max-w-[200px] mx-auto">
+                    For {email}
+                  </p>
                 </div>
 
-                {/* Confirm Password */}
-                <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider dark:text-gray-300 text-slate-700 mb-1.5">
-                    Confirm New Password
-                  </label>
-                  <div className="relative">
-                    <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 dark:text-gray-400 text-slate-400" size={16} />
-                    <input
-                      type={showConfirmPassword ? "text" : "password"}
-                      value={passwords.confirmPassword}
-                      onChange={(e) => {
-                        setPasswords({ ...passwords, confirmPassword: e.target.value });
-                        setError("");
-                      }}
-                      placeholder="Re-enter new password"
-                      className="input-field pl-10 pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 dark:text-gray-400 text-slate-400 hover:text-primary-600 transition-colors"
-                    >
-                      {showConfirmPassword ? <FiEyeOff size={16} /> : <FiEye size={16} />}
-                    </button>
+                <form onSubmit={handleResetPassword} className="space-y-2 my-auto" noValidate>
+                  {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-600 text-[10px] p-2 rounded-xl font-medium">
+                      ⚠️ {error}
+                    </div>
+                  )}
+
+                  <div>
+                    <div className="relative">
+                      <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        value={passwords.newPassword}
+                        onChange={(e) => {
+                          setPasswords({ ...passwords, newPassword: e.target.value });
+                          setError("");
+                        }}
+                        placeholder="New Password (min 6 chars)"
+                        className="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-1.5 lg:py-2 pl-9 pr-9 text-xs lg:text-sm focus:outline-none focus:border-[#ca0019] focus:ring-1 focus:ring-[#ca0019]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      >
+                        {showPassword ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+                      </button>
+                    </div>
                   </div>
+
+                  <div>
+                    <div className="relative">
+                      <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        value={passwords.confirmPassword}
+                        onChange={(e) => {
+                          setPasswords({ ...passwords, confirmPassword: e.target.value });
+                          setError("");
+                        }}
+                        placeholder="Confirm New Password"
+                        className="w-full bg-slate-50/80 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-1.5 lg:py-2 pl-9 pr-9 text-xs lg:text-sm focus:outline-none focus:border-[#ca0019] focus:ring-1 focus:ring-[#ca0019]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      >
+                        {showConfirmPassword ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-2 lg:py-2.5 bg-[#ca0019] hover:bg-[#b00015] text-white font-bold rounded-xl shadow-md shadow-red-600/30 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 text-xs lg:text-sm cursor-pointer"
+                  >
+                    {loading ? <Spinner size="sm" /> : "Save New Password"}
+                  </button>
+                </form>
+              </>
+            )}
+
+            {/* STEP 3: SUCCESS */}
+            {step === 3 && (
+              <div className="text-center my-auto">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2 text-xl">
+                  🎉
                 </div>
+                <h2 className="text-base sm:text-lg lg:text-xl font-black text-slate-900 leading-tight">
+                  Password Reset!
+                </h2>
+                <p className="text-[11px] lg:text-xs text-slate-500 font-medium mt-1 mb-4 leading-relaxed max-w-[220px] mx-auto">
+                  Your password for <strong className="text-slate-700">{email}</strong> has been updated.
+                </p>
 
                 <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-primary w-full py-2.5 font-semibold"
+                  onClick={() => navigate("/register?mode=login")}
+                  className="w-full py-2 lg:py-2.5 bg-[#ca0019] hover:bg-[#b00015] text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-1.5 text-xs lg:text-sm cursor-pointer"
                 >
-                  {loading ? <Spinner size="sm" /> : "Update & Save Password"}
+                  Sign In Now →
                 </button>
-              </form>
-            </div>
-          )}
-
-          {/* STEP 3: SUCCESS */}
-          {step === 3 && (
-            <div className="text-center py-4">
-              <div className="w-14 h-14 rounded-full bg-primary-100 dark:bg-primary-800/50 text-primary-600 dark:text-primary-400 flex items-center justify-center mx-auto mb-4 text-2xl">
-                🎉
               </div>
-              <h1 className="text-2xl font-bold dark:text-white text-slate-900 mb-2">
-                Password Reset Successfully!
-              </h1>
-              <p className="text-xs dark:text-gray-400 text-slate-600 leading-relaxed mb-6 max-w-xs mx-auto">
-                Your password for <span className="font-semibold text-slate-800 dark:text-gray-200">{email}</span> has been updated. You can now log in using your new password.
-              </p>
+            )}
+          </div>
 
-              <button
-                onClick={() => navigate("/login")}
-                className="btn-primary w-full py-2.5 font-semibold"
-              >
-                Sign In Now →
-              </button>
+          {/* ── Mobile Form Card (< md screens) ── */}
+          <div className="md:hidden absolute inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 z-20 pointer-events-auto">
+            <div className="w-full max-w-xs bg-white rounded-3xl p-5 shadow-2xl text-slate-800">
+              {step === 1 && (
+                <>
+                  <div className="text-center mb-3">
+                    <div className="w-10 h-10 rounded-full bg-[#ca0019] text-white flex items-center justify-center mx-auto text-lg shadow-md mb-1.5">
+                      <FiKey />
+                    </div>
+                    <h2 className="text-lg font-black text-slate-900">Reset Password</h2>
+                    <p className="text-[11px] text-slate-500">Enter your email to reset password</p>
+                  </div>
+
+                  <form onSubmit={handleVerifyEmail} className="space-y-2.5" noValidate>
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 text-red-600 text-[10px] p-2 rounded-xl font-medium">
+                        ⚠️ {error}
+                      </div>
+                    )}
+                    <div>
+                      <div className="relative">
+                        <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            setError("");
+                          }}
+                          placeholder="Registered Email"
+                          className="w-full bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-2 pl-9 pr-3 text-xs focus:outline-none focus:border-[#ca0019]"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-2.5 bg-[#ca0019] hover:bg-[#b00015] text-white font-bold rounded-xl shadow-md text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {loading ? <Spinner size="sm" /> : <span>Verify Email →</span>}
+                    </button>
+                  </form>
+
+                  <div className="text-center pt-2 mt-1">
+                    <Link
+                      to="/register?mode=login"
+                      className="text-[11px] font-semibold text-[#ca0019] hover:underline"
+                    >
+                      Back to Sign In
+                    </Link>
+                  </div>
+                </>
+              )}
+
+              {step === 2 && (
+                <>
+                  <div className="text-center mb-3">
+                    <div className="w-10 h-10 rounded-full bg-[#ca0019] text-white flex items-center justify-center mx-auto text-lg shadow-md mb-1.5">
+                      <FiLock />
+                    </div>
+                    <h2 className="text-lg font-black text-slate-900">New Password</h2>
+                    <p className="text-[11px] text-slate-500">Create a new password</p>
+                  </div>
+
+                  <form onSubmit={handleResetPassword} className="space-y-2.5" noValidate>
+                    {error && (
+                      <div className="bg-red-50 border border-red-200 text-red-600 text-[10px] p-2 rounded-xl font-medium">
+                        ⚠️ {error}
+                      </div>
+                    )}
+
+                    <div>
+                      <div className="relative">
+                        <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          value={passwords.newPassword}
+                          onChange={(e) => {
+                            setPasswords({ ...passwords, newPassword: e.target.value });
+                            setError("");
+                          }}
+                          placeholder="New Password"
+                          className="w-full bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-2 pl-9 pr-9 text-xs focus:outline-none focus:border-[#ca0019]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
+                        >
+                          {showPassword ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="relative">
+                        <FiLock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#ca0019]" size={15} />
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          value={passwords.confirmPassword}
+                          onChange={(e) => {
+                            setPasswords({ ...passwords, confirmPassword: e.target.value });
+                            setError("");
+                          }}
+                          placeholder="Confirm Password"
+                          className="w-full bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 rounded-xl py-2 pl-9 pr-9 text-xs focus:outline-none focus:border-[#ca0019]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"
+                        >
+                          {showConfirmPassword ? <FiEyeOff size={14} /> : <FiEye size={14} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-2.5 bg-[#ca0019] hover:bg-[#b00015] text-white font-bold rounded-xl shadow-md text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      {loading ? <Spinner size="sm" /> : "Save Password"}
+                    </button>
+                  </form>
+                </>
+              )}
+
+              {step === 3 && (
+                <div className="text-center py-2">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-2 text-xl">
+                    🎉
+                  </div>
+                  <h2 className="text-lg font-black text-slate-900">Password Reset!</h2>
+                  <p className="text-[11px] text-slate-500 mt-1 mb-3">Your password has been updated.</p>
+
+                  <button
+                    onClick={() => navigate("/register?mode=login")}
+                    className="w-full py-2.5 bg-[#ca0019] text-white font-bold rounded-xl text-xs"
+                  >
+                    Sign In Now →
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

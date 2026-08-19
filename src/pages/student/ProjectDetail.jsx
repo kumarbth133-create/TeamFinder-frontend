@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
@@ -92,7 +92,7 @@ const ProjectDetail = () => {
   return (
     <MainLayout>
       <div className="max-w-4xl mx-auto space-y-6">
-        <Link to="/projects" className="flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600">
+        <Link to="/projects" className="flex items-center gap-2 text-sm text-slate-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">
           <FiArrowLeft /> Back to Projects
         </Link>
 
@@ -101,14 +101,14 @@ const ProjectDetail = () => {
           <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
             <div>
               <div className="flex items-center gap-3 flex-wrap">
-                <h1 className="text-2xl font-bold text-gray-900">{project.title}</h1>
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-gray-100">{project.title}</h1>
                 <span className={`text-sm px-3 py-1 rounded-full font-medium ${
-                  project.status === "open" ? "bg-green-100 text-green-700" :
-                  project.status === "closed" ? "bg-red-100 text-red-700" : "bg-gray-100 text-gray-600"
+                  project.status === "open" ? "bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 border border-primary-200 dark:border-primary-700/40" :
+                  project.status === "closed" ? "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400 border border-red-200 dark:border-red-800/40" : "bg-slate-100 text-slate-700 dark:bg-dark-700 dark:text-gray-400"
                 }`}>{project.status}</span>
               </div>
-              <p className="text-sm text-gray-500 mt-1">
-                Created by <span className="font-medium text-gray-700">{project.owner?.name}</span>
+              <p className="text-sm text-slate-500 dark:text-gray-400 mt-1">
+                Created by <span className="font-medium text-slate-800 dark:text-gray-200">{project.owner?.name}</span>
               </p>
             </div>
 
@@ -125,19 +125,19 @@ const ProjectDetail = () => {
             )}
           </div>
 
-          <p className="text-gray-700 leading-relaxed mb-4">{project.description}</p>
+          <p className="text-slate-700 dark:text-gray-300 leading-relaxed mb-4">{project.description}</p>
 
           <div className="flex flex-wrap gap-2 mb-4">
             {project.skillsRequired.map((s) => <SkillBadge key={s} skill={s} />)}
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-gray-400">
             <span className="flex items-center gap-1">
               <FiUsers size={14} /> {project.teamMembers.length}/{project.maxMembers} members
             </span>
             {project.githubRepo && (
               <a href={project.githubRepo} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1 text-primary-600 hover:underline">
+                className="flex items-center gap-1 text-primary-600 dark:text-primary-400 hover:underline">
                 <FiGithub size={14} /> GitHub Repo
               </a>
             )}
@@ -147,11 +147,11 @@ const ProjectDetail = () => {
         {/* Join Request Section */}
         {!isOwner && !isMember && project.status === "open" && (
           <div className="card">
-            <h3 className="font-semibold text-gray-900 mb-3">Join this Project</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-gray-100 mb-3">Join this Project</h3>
             {!joinRequest || joinRequest.status === "rejected" ? (
               <div className="space-y-3">
                 {joinRequest?.status === "rejected" && (
-                  <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">
+                  <p className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/40 px-3 py-2 rounded-lg border border-red-200 dark:border-red-800/40">
                     Your previous request was rejected. You can send a new one.
                   </p>
                 )}
@@ -168,42 +168,42 @@ const ProjectDetail = () => {
                 </button>
               </div>
             ) : joinRequest.status === "pending" ? (
-              <div className="flex items-center justify-between bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                <p className="text-sm text-yellow-700">✅ Request sent — waiting for owner's response</p>
-                <button onClick={handleCancelRequest} className="text-sm text-red-600 hover:underline">Cancel</button>
+              <div className="flex items-center justify-between bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 rounded-xl p-3">
+                <p className="text-sm text-amber-800 dark:text-amber-300 font-medium">✅ Request sent — waiting for owner's response</p>
+                <button onClick={handleCancelRequest} className="text-sm text-primary-600 dark:text-primary-400 hover:underline">Cancel</button>
               </div>
             ) : joinRequest.status === "accepted" ? (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                <p className="text-sm text-green-700">🎉 Your request was accepted! You are a team member.</p>
+              <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-xl p-3">
+                <p className="text-sm text-emerald-800 dark:text-emerald-300 font-medium">🎉 Your request was accepted! You are a team member.</p>
               </div>
             ) : null}
           </div>
         )}
 
         {isMember && !isOwner && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-            <p className="text-green-700 font-medium">✅ You are a member of this project!</p>
+          <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/40 rounded-xl p-4">
+            <p className="text-emerald-800 dark:text-emerald-300 font-medium">✅ You are a member of this project!</p>
           </div>
         )}
 
         {/* Team Members */}
         <div className="card">
-          <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-slate-900 dark:text-gray-100 mb-4 flex items-center gap-2">
             <FiUsers /> Team Members ({project.teamMembers.length})
           </h3>
           <div className="grid sm:grid-cols-2 gap-3">
             {project.teamMembers.map((member) => (
               <Link key={member._id} to={`/students/${member._id}`}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition">
+                className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-dark-700 transition">
                 <Avatar src={member.profilePicture} name={member.name} size="sm" />
                 <div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-slate-900 dark:text-gray-100">
                     {member.name}
                     {member._id === project.owner._id && (
-                      <span className="ml-2 text-xs bg-primary-100 text-blue-700 px-1.5 py-0.5 rounded">Owner</span>
+                      <span className="ml-2 text-xs bg-primary-100 text-primary-700 dark:bg-primary-900/50 dark:text-primary-300 px-1.5 py-0.5 rounded font-medium">Owner</span>
                     )}
                   </p>
-                  {member.college && <p className="text-xs text-gray-500">{member.college}</p>}
+                  {member.college && <p className="text-xs text-slate-500 dark:text-gray-400">{member.college}</p>}
                 </div>
               </Link>
             ))}
@@ -261,17 +261,17 @@ const PendingRequestsSection = ({ projectId, projectTitle }) => {
 
   return (
     <div className="card">
-      <h3 className="font-semibold text-gray-900 mb-4">
+      <h3 className="font-semibold text-slate-900 dark:text-gray-100 mb-4">
         Pending Join Requests ({requests.length})
       </h3>
       <div className="space-y-3">
         {requests.map((req) => (
-          <div key={req._id} className="flex flex-wrap items-center justify-between gap-3 p-3 bg-gray-50 rounded-lg">
+          <div key={req._id} className="flex flex-wrap items-center justify-between gap-3 p-3 bg-slate-50 dark:bg-dark-700 rounded-xl border border-slate-200 dark:border-dark-600">
             <div className="flex items-center gap-3">
               <Avatar src={req.sender?.profilePicture} name={req.sender?.name} size="sm" />
               <div>
-                <p className="text-sm font-medium text-gray-900">{req.sender?.name}</p>
-                {req.message && <p className="text-xs text-gray-500 max-w-xs">{req.message}</p>}
+                <p className="text-sm font-medium text-slate-900 dark:text-gray-100">{req.sender?.name}</p>
+                {req.message && <p className="text-xs text-slate-500 dark:text-gray-400 max-w-xs">{req.message}</p>}
                 <div className="flex flex-wrap gap-1 mt-1">
                   {req.sender?.skills?.slice(0, 3).map((s) => <SkillBadge key={s} skill={s} />)}
                 </div>

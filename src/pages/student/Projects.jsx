@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
@@ -60,7 +60,7 @@ const Projects = () => {
     <MainLayout>
       <div className="space-y-5">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white">Browse Projects</h1>
+          <h1 className="text-xl font-bold dark:text-white text-slate-900">Browse Projects</h1>
           <Link to="/projects/create" className="btn-primary">
             <FiPlus size={15} /> New Project
           </Link>
@@ -70,12 +70,12 @@ const Projects = () => {
         <div className="card space-y-3">
           <form onSubmit={handleSearch} className="flex flex-wrap gap-2">
             <div className="relative flex-1 min-w-40">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500" size={14} />
               <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search projects..." className="input-field pl-9" />
             </div>
             <select value={statusFilter} onChange={handleStatusChange}
-              className="input-field w-auto bg-dark-700 text-gray-300">
+              className="input-field w-auto">
               <option value="">All Status</option>
               <option value="open">Open</option>
               <option value="closed">Closed</option>
@@ -96,7 +96,7 @@ const Projects = () => {
               {activeSkills.map((s) => (
                 <span key={s} className="flex items-center gap-1 badge">
                   {s}
-                  <button onClick={() => removeSkillFilter(s)} className="hover:text-green-200 ml-0.5">
+                  <button onClick={() => removeSkillFilter(s)} className="hover:text-primary-700 dark:hover:text-primary-200 ml-0.5">
                     <FiX size={11} />
                   </button>
                 </span>
@@ -114,43 +114,43 @@ const Projects = () => {
             action={<Link to="/projects/create" className="btn-primary">Create Project</Link>} />
         ) : (
           <>
-            <p className="text-xs text-gray-500">{projects.length} project{projects.length !== 1 ? "s" : ""} found</p>
+            <p className="text-xs text-slate-500 dark:text-gray-400">{projects.length} project{projects.length !== 1 ? "s" : ""} found</p>
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
               {projects.map((project) => (
                 <div key={project._id} className="card-hover flex flex-col">
                   <div className="flex justify-between items-start mb-2">
                     <Link to={`/projects/${project._id}`}
-                      className="font-semibold text-gray-100 hover:text-green-400 transition line-clamp-1 text-sm">
+                      className="font-semibold text-slate-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition line-clamp-1 text-sm">
                       {project.title}
                     </Link>
                     <span className={`ml-2 flex-shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${
-                      project.status === "open" ? "bg-primary-800/50 text-green-400 border border-green-800/40" :
-                      project.status === "closed" ? "bg-red-900/50 text-red-400 border border-red-800/40" :
-                      "bg-gray-800 text-gray-400"
+                      project.status === "open" ? "bg-primary-50 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300 border border-primary-200 dark:border-primary-700/40" :
+                      project.status === "closed" ? "bg-red-50 text-red-700 dark:bg-red-950/40 dark:text-red-400 border border-red-200 dark:border-red-800/40" :
+                      "bg-slate-100 text-slate-700 dark:bg-dark-700 dark:text-gray-400"
                     }`}>{project.status}</span>
                   </div>
 
-                  <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1">{project.description}</p>
+                  <p className="text-xs text-slate-600 dark:text-gray-400 line-clamp-2 mb-3 flex-1">{project.description}</p>
 
                   <div className="flex flex-wrap gap-1 mb-3">
                     {project.skillsRequired.slice(0, 3).map((s) => <SkillBadge key={s} skill={s} />)}
                     {project.skillsRequired.length > 3 && (
-                      <span className="text-xs text-gray-600">+{project.skillsRequired.length - 3}</span>
+                      <span className="text-xs text-slate-500 dark:text-gray-400">+{project.skillsRequired.length - 3}</span>
                     )}
                   </div>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-dark-600">
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-dark-600">
                     <div className="flex items-center gap-2">
                       <Avatar src={project.owner?.profilePicture} name={project.owner?.name} size="sm" />
-                      <span className="text-xs text-gray-500 truncate max-w-20">{project.owner?.name}</span>
+                      <span className="text-xs text-slate-600 dark:text-gray-400 truncate max-w-20">{project.owner?.name}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="flex items-center gap-1 text-xs text-gray-500">
+                      <span className="flex items-center gap-1 text-xs text-slate-500 dark:text-gray-400">
                         <FiUsers size={11} /> {project.teamMembers.length}/{project.maxMembers}
                       </span>
                       {project.owner?._id !== user?._id && project.status === "open" && (
                         <Link to={`/projects/${project._id}`}
-                          className="text-xs text-green-400 hover:text-green-300 flex items-center gap-1 transition">
+                          className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 transition font-bold">
                           Join <FiArrowRight size={11} />
                         </Link>
                       )}

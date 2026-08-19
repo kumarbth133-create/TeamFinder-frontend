@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import MainLayout from "../../components/layout/MainLayout";
@@ -115,17 +115,26 @@ const Courses = () => {
   return (
     <MainLayout>
       <div className="space-y-6">
-        {/* Banner Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-red-900/40 via-dark-800 to-amber-950/30 p-6 rounded-xl border border-amber-800/30">
-          <div>
-            <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm mb-1">
-              <FiYoutube size={20} className="text-red-500" />
-              <span>Technical Learning Hub & Premium Courses</span>
+        {/* Banner Header (Vibrant Crimson Gradient Banner matching Dashboard) */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#990012] via-[#ca0019] to-[#e6001c] text-white py-4 px-5 sm:py-5 sm:px-6 shadow-lg shadow-[#ca0019]/25 border border-white/20 hover:shadow-xl hover:shadow-[#ca0019]/30 transition-all duration-300">
+          <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="relative flex items-center gap-4 z-10">
+            <div className="p-3 rounded-2xl bg-white/15 text-white border border-white/30 backdrop-blur-sm flex items-center justify-center shrink-0 shadow-sm">
+              <FiBookOpen size={24} />
             </div>
-            <h1 className="text-2xl font-bold text-white">Learn Technical Subjects & Master Stacks</h1>
-            <p className="text-sm text-gray-400 mt-1 max-w-2xl">
-              Browse technical courses in HTML, CSS, React, JS, Node, Spring Boot, Golang, Python, DSA & Git. Access free tutorials or unlock specialized <span className="text-amber-400 font-semibold">Premium Courses (₹149)</span> via UPI or Mobile Pay.
-            </p>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[11px] font-black uppercase tracking-wider text-white/90">
+                  Technical Learning Hub & Courses
+                </span>
+                <span className="text-[10px] bg-white/20 text-white px-2.5 py-0.5 rounded-full font-bold border border-white/30">
+                  Courses
+                </span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-black text-white leading-tight">
+                Learn Technical Subjects & Master Stacks
+              </h1>
+            </div>
           </div>
         </div>
 
@@ -170,12 +179,12 @@ const Courses = () => {
                 <button
                   key={subj}
                   onClick={() => setActiveSubject(subj)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition flex-shrink-0 border flex items-center gap-1 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition flex-shrink-0 border flex items-center gap-1 ${
                     activeSubject === subj
-                      ? "bg-red-600 text-white border-red-500 shadow-md"
+                      ? "bg-[#ca0019] text-white border-[#ca0019] shadow-md shadow-[#ca0019]/30"
                       : isPremSubject
-                      ? "bg-amber-950/40 text-amber-400 border-amber-600/60 hover:bg-amber-900/50"
-                      : "bg-dark-900 text-gray-400 border-dark-600 hover:text-white hover:border-gray-500"
+                      ? "bg-transparent text-amber-600 dark:text-amber-400 border-amber-500/50 hover:border-amber-500 hover:bg-amber-500/10 hover:shadow-md hover:shadow-amber-500/25"
+                      : "bg-transparent text-slate-800 dark:text-slate-200 border-[#ca0019]/40 hover:border-[#ca0019] hover:bg-[#ca0019]/10 hover:text-[#ca0019] hover:shadow-md hover:shadow-[#ca0019]/25"
                   }`}
                 >
                   {isPremSubject && <span>👑</span>}
@@ -234,10 +243,6 @@ const Courses = () => {
                         </button>
                       </div>
 
-                      <span className={`absolute top-2 left-2 px-2 py-0.5 rounded text-[11px] font-bold border backdrop-blur-sm shadow ${getSubjectColor(course.subject)}`}>
-                        {course.subject}
-                      </span>
-
                       {/* Premium / Free Tag */}
                       {course.isPremium ? (
                         <span className="absolute top-2 right-2 bg-amber-500 text-black px-2 py-0.5 rounded text-[11px] font-bold shadow flex items-center gap-1">
@@ -265,19 +270,19 @@ const Courses = () => {
 
                       <Link
                         to={`/courses/${course._id}`}
-                        className="font-bold text-gray-100 group-hover:text-red-400 transition text-sm line-clamp-2 block"
+                        className="font-bold text-slate-900 dark:text-gray-100 group-hover:text-[#ca0019] transition text-sm line-clamp-2 block"
                       >
                         {course.title}
                       </Link>
 
-                      <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
                         {course.description}
                       </p>
 
                       {course.tags?.length > 0 && (
                         <div className="flex flex-wrap gap-1 pt-1">
                           {course.tags.slice(0, 3).map((tag) => (
-                            <span key={tag} className="text-[10px] bg-dark-900 text-gray-400 px-2 py-0.5 rounded border border-dark-600">
+                            <span key={tag} className="text-[10px] bg-transparent text-slate-600 dark:text-gray-300 px-2 py-0.5 rounded-md border border-slate-200 dark:border-dark-600 hover:border-[#ca0019]/60 hover:text-[#ca0019] transition-colors">
                               #{tag}
                             </span>
                           ))}
@@ -286,7 +291,7 @@ const Courses = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex items-center justify-between pt-3 mt-4 border-t border-dark-600">
+                    <div className="flex items-center justify-between pt-3 mt-4 border-t border-slate-200 dark:border-dark-600">
                       {showPremium ? (
                         <button
                           onClick={() => handleCourseClick(course)}
@@ -297,7 +302,7 @@ const Courses = () => {
                       ) : (
                         <button
                           onClick={() => handleCourseClick(course)}
-                          className="btn-primary text-xs py-1.5 px-3 bg-red-600 hover:bg-red-500 flex items-center gap-1.5"
+                          className="btn-primary text-xs py-1.5 px-3 bg-[#ca0019] hover:bg-[#b00016] text-white flex items-center gap-1.5 shadow-sm"
                         >
                           <FiPlay size={13} /> Watch Video
                         </button>
@@ -307,7 +312,7 @@ const Courses = () => {
                         href={course.youtubeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-gray-400 hover:text-red-400 flex items-center gap-1 transition"
+                        className="text-xs text-slate-500 dark:text-gray-400 hover:text-[#ca0019] flex items-center gap-1 transition"
                       >
                         YouTube <FiExternalLink size={12} />
                       </a>

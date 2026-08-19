@@ -98,24 +98,24 @@ const CourseDetail = () => {
                 </div>
               </div>
 
-              <h1 className="text-xl font-bold text-gray-100">{course.title}</h1>
-              <p className="text-xs text-red-400 font-medium">Instructor: {course.instructor}</p>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-gray-100">{course.title}</h1>
+              <p className="text-xs text-[#ca0019] dark:text-rose-400 font-bold">Instructor: {course.instructor}</p>
 
-              <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line pt-2">
+              <p className="text-sm text-slate-700 dark:text-gray-300 leading-relaxed whitespace-pre-line pt-2">
                 {course.description}
               </p>
 
               {course.tags?.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 pt-2">
                   {course.tags.map((t) => (
-                    <span key={t} className="text-xs bg-dark-900 text-gray-400 px-2.5 py-1 rounded-md border border-dark-600">
+                    <span key={t} className="text-xs bg-transparent text-slate-600 dark:text-gray-300 px-2.5 py-1 rounded-md border border-slate-200 dark:border-dark-600 hover:border-[#ca0019]/60 hover:text-[#ca0019] transition-colors">
                       #{t}
                     </span>
                   ))}
                 </div>
               )}
 
-              <div className="flex items-center justify-between pt-4 border-t border-dark-600">
+              <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-dark-600">
                 <button
                   onClick={copyLink}
                   className="btn-secondary text-xs flex items-center gap-1.5"
@@ -127,7 +127,7 @@ const CourseDetail = () => {
                   href={course.youtubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary text-xs bg-red-600 hover:bg-red-500 flex items-center gap-1.5"
+                  className="btn-primary text-xs bg-[#ca0019] hover:bg-[#b00016] text-white flex items-center gap-1.5 shadow-sm"
                 >
                   <FiYoutube size={16} /> Open Directly on YouTube <FiExternalLink size={13} />
                 </a>

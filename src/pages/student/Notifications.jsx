@@ -54,7 +54,7 @@ const Notifications = () => {
     <MainLayout>
       <div className="max-w-2xl space-y-5">
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
+          <h1 className="text-xl font-bold dark:text-white text-slate-900 flex items-center gap-2">
             Notifications
             {unreadCount > 0 && (
               <span className="badge text-xs">{unreadCount} new</span>
@@ -62,7 +62,7 @@ const Notifications = () => {
           </h1>
           {unreadCount > 0 && (
             <button onClick={markAllRead}
-              className="text-xs text-green-400 hover:text-green-300 flex items-center gap-1 transition">
+              className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 transition font-medium">
               <FiCheckCircle size={13} /> Mark all read
             </button>
           )}
@@ -78,32 +78,32 @@ const Notifications = () => {
               <div
                 key={notif._id}
                 onClick={() => !notif.isRead && markAsRead(notif._id)}
-                className={`card cursor-pointer hover:border-green-700/40 transition ${
-                  !notif.isRead ? "border-green-700/40 bg-green-900/10" : ""
+                className={`card cursor-pointer hover:border-primary-500/40 transition ${
+                  !notif.isRead ? "border-primary-500/40 bg-primary-50/50 dark:bg-primary-950/20" : ""
                 }`}
               >
                 <div className="flex items-start gap-3">
                   <span className="text-xl flex-shrink-0 mt-0.5">{typeEmoji[notif.type] || "🔔"}</span>
                   <div className="flex-1 min-w-0">
-                    <p className={`text-sm ${!notif.isRead ? "font-medium text-gray-100" : "text-gray-400"}`}>
+                    <p className={`text-sm ${!notif.isRead ? "font-medium text-slate-900 dark:text-gray-100" : "text-slate-500 dark:text-gray-400"}`}>
                       {notif.message}
                     </p>
                     {notif.project && (
                       <Link to={`/projects/${notif.project._id}`}
-                        className="text-xs text-green-400 hover:underline mt-1 block"
+                        className="text-xs text-primary-600 dark:text-primary-400 hover:underline mt-1 block font-medium"
                         onClick={(e) => e.stopPropagation()}>
                         {notif.project.title} →
                       </Link>
                     )}
-                    <p className="text-xs text-gray-600 mt-1">
+                    <p className="text-xs text-slate-400 dark:text-gray-500 mt-1">
                       {new Date(notif.createdAt).toLocaleString()}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    {!notif.isRead && <span className="w-2 h-2 bg-green-500 rounded-full" />}
+                    {!notif.isRead && <span className="w-2 h-2 bg-primary-600 rounded-full" />}
                     <button
                       onClick={(e) => { e.stopPropagation(); deleteNotif(notif._id); }}
-                      className="text-gray-600 hover:text-red-400 transition p-1">
+                      className="text-slate-400 hover:text-red-600 dark:text-gray-500 dark:hover:text-red-400 transition p-1">
                       <FiTrash2 size={13} />
                     </button>
                   </div>

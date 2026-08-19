@@ -18,13 +18,16 @@ API.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Global response interceptor - handle 401
+// Global response interceptor - handle 401 safely without reload loops
 API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("teamup_user");
-      window.location.href = "/login";
+      const authPaths = ["/login", "/register", "/forgot-password", "/admin/login"];
+      if (!authPaths.includes(window.location.pathname)) {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }

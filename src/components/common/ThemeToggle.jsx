@@ -11,7 +11,7 @@ const ThemeToggle = ({ className = "" }) => {
       type="button"
       aria-label="Toggle theme mode"
       title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
-      className={`relative inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300 border shadow-xs select-none cursor-pointer active:scale-95 ${
+      className={`relative inline-flex items-center justify-center p-2 rounded-xl transition-all duration-300 border shadow-sm select-none cursor-pointer active:scale-95 ${
         isDark
           ? "bg-dark-800 hover:bg-dark-700 text-amber-300 border-dark-600 shadow-black/40"
           : "bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-slate-200/80"

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import toast from "react-hot-toast";
@@ -50,10 +50,10 @@ const MyRequests = () => {
   return (
     <MainLayout>
       <div className="space-y-5">
-        <h1 className="text-xl font-bold text-white">Join Requests</h1>
+        <h1 className="text-xl font-bold dark:text-white text-slate-900">Join Requests</h1>
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-dark-750 border border-dark-600 p-1 rounded-xl w-fit">
+        <div className="flex gap-1 bg-slate-100 dark:bg-dark-750 border border-slate-200 dark:border-dark-600 p-1 rounded-xl w-fit">
           {[
             { key: "received", label: "Received", count: pendingReceived.length },
             { key: "sent", label: "Sent", count: sent.length },
@@ -61,12 +61,12 @@ const MyRequests = () => {
             <button key={tab.key} onClick={() => setActiveTab(tab.key)}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 ${
                 activeTab === tab.key
-                  ? "bg-primary-700/20 text-green-400 border border-primary-600/30"
-                  : "text-gray-500 hover:text-gray-200"
+                  ? "bg-white dark:bg-primary-950/60 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-800/60 shadow-sm"
+                  : "text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-gray-200"
               }`}>
               {tab.label}
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                activeTab === tab.key ? "bg-primary-800/50 text-green-400" : "bg-dark-600 text-gray-500"
+                activeTab === tab.key ? "bg-primary-100 text-primary-700 dark:bg-primary-900/60 dark:text-primary-300" : "bg-slate-200 dark:bg-dark-600 text-slate-600 dark:text-gray-400"
               }`}>{tab.count}</span>
             </button>
           ))}
@@ -106,16 +106,16 @@ const ReceivedTab = ({ requests, onRespond }) => {
               <Avatar src={req.sender?.profilePicture} name={req.sender?.name} size="md" />
               <div>
                 <Link to={`/students/${req.sender?._id}`}
-                  className="font-semibold text-gray-100 hover:text-green-400 transition text-sm">
+                  className="font-semibold text-slate-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition text-sm">
                   {req.sender?.name}
                 </Link>
-                <p className="text-xs text-gray-500 mt-0.5">wants to join</p>
+                <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">wants to join</p>
                 <Link to={`/projects/${req.project?._id}`}
-                  className="text-sm text-green-400 hover:underline font-medium">
+                  className="text-sm text-primary-600 dark:text-primary-400 hover:underline font-medium">
                   {req.project?.title}
                 </Link>
                 {req.message && (
-                  <p className="text-xs text-gray-500 mt-2 bg-dark-700 px-3 py-2 rounded-lg italic border border-dark-600">
+                  <p className="text-xs text-slate-600 dark:text-gray-300 mt-2 bg-slate-50 dark:bg-dark-700 px-3 py-2 rounded-lg italic border border-slate-200 dark:border-dark-600">
                     "{req.message}"
                   </p>
                 )}
@@ -150,17 +150,17 @@ const SentTab = ({ requests, onCancel }) => {
         <div key={req._id} className="card flex flex-wrap justify-between items-center gap-4">
           <div>
             <Link to={`/projects/${req.project?._id}`}
-              className="font-semibold text-gray-100 hover:text-green-400 transition text-sm">
+              className="font-semibold text-slate-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition text-sm">
               {req.project?.title}
             </Link>
-            <p className="text-xs text-gray-500 mt-0.5">Owner: {req.receiver?.name}</p>
-            {req.message && <p className="text-xs text-gray-500 mt-1 italic">"{req.message}"</p>}
+            <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">Owner: {req.receiver?.name}</p>
+            {req.message && <p className="text-xs text-slate-600 dark:text-gray-300 mt-1 italic bg-slate-50 dark:bg-dark-700 px-3 py-1 rounded-lg border border-slate-200 dark:border-dark-600">"{req.message}"</p>}
           </div>
           <div className="flex items-center gap-3">
             <span className={statusBadge(req.status)}>{req.status}</span>
             {req.status === "pending" && (
               <button onClick={() => onCancel(req._id)}
-                className="text-xs text-red-400 hover:text-red-300 transition hover:underline">
+                className="text-xs text-primary-600 dark:text-primary-400 hover:underline transition">
                 Cancel
               </button>
             )}

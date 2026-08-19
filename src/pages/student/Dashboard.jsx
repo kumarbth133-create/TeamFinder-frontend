@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import API from "../../api/axios";
@@ -23,17 +23,22 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const [projRes, sentRes, receivedRes, notifRes] = await Promise.all([
-          API.get("/projects/my-projects"),
-          API.get("/joinrequests/sent"),
-          API.get("/joinrequests/received"),
-          API.get("/notifications"),
+          API.get("/projects/my-projects").catch(() => ({ data: { data: [] } })),
+          API.get("/joinrequests/sent").catch(() => ({ data: { data: [] } })),
+          API.get("/joinrequests/received").catch(() => ({ data: { data: [] } })),
+          API.get("/notifications").catch(() => ({ data: { data: [] } })),
         ]);
-        setMyProjects(projRes.data.data);
-        setSentRequests(sentRes.data.data);
-        setReceivedRequests(receivedRes.data.data.filter((r) => r.status === "pending"));
-        setNotifications(notifRes.data.data.slice(0, 5));
+        const projData = Array.isArray(projRes.data?.data) ? projRes.data.data : [];
+        const sentData = Array.isArray(sentRes.data?.data) ? sentRes.data.data : [];
+        const receivedData = Array.isArray(receivedRes.data?.data) ? receivedRes.data.data : [];
+        const notifData = Array.isArray(notifRes.data?.data) ? notifRes.data.data : [];
+
+        setMyProjects(projData);
+        setSentRequests(sentData);
+        setReceivedRequests(receivedData.filter((r) => r && r.status === "pending"));
+        setNotifications(notifData.slice(0, 5));
       } catch (err) {
-        console.error(err);
+        console.error("Dashboard fetch error:", err);
       } finally {
         setLoading(false);
       }
@@ -47,17 +52,17 @@ const Dashboard = () => {
     </MainLayout>
   );
 
-  const totalMembers = myProjects.reduce((acc, p) => acc + (p.teamMembers?.length || 0), 0);
+  const totalMembers = (Array.isArray(myProjects) ? myProjects : []).reduce((acc, p) => acc + (p.teamMembers?.length || 0), 0);
 
   const stats = [
     {
       label: "My Projects", value: myProjects.length,
-      icon: <FiFolder size={20} />, iconBg: "bg-blue-50 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400",
+      icon: <FiFolder size={20} />, iconBg: "bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-400",
       trend: "+20% this month", to: "/my-projects",
     },
     {
       label: "Requests Sent", value: sentRequests.length,
-      icon: <FiSend size={20} />, iconBg: "bg-primary-100 text-primary-600 dark:bg-primary-500/10 dark:text-primary-400",
+      icon: <FiSend size={20} />, iconBg: "bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-400",
       trend: "Active", to: "/my-requests",
     },
     {
@@ -87,14 +92,14 @@ const Dashboard = () => {
         <div className="flex-1 min-w-0 space-y-6">
 
           {/* Welcome Banner */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-700 text-white p-6 sm:p-8 shadow-sm">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#880010] via-[#ca0019] to-[#dc142a] text-white p-6 sm:p-8 shadow-lg shadow-[#ca0019]/20 border border-white/20">
             <div className="relative flex items-center gap-5">
               <Avatar src={user?.profilePicture} name={user?.name} size="xl" className="ring-4 ring-white/20" />
               <div>
                 <h1 className="text-xl sm:text-2xl font-extrabold text-white">
                   Welcome back, {user?.name?.split(" ")[0]}! 👋
                 </h1>
-                <p className="text-primary-100 text-sm mt-1">
+                <p className="text-white/95 text-sm mt-1">
                   Let's collaborate and build something amazing together today.
                 </p>
                 {user?.skills?.length > 0 && (
@@ -264,23 +269,23 @@ const Dashboard = () => {
 
           {/* Profile Completion Card */}
           {(!user?.bio || !user?.skills?.length || !user?.githubLink) && (
-            <div className="card border-primary-200 dark:border-emerald-800/40">
+            <div className="card border-primary-200 dark:border-primary-900/40">
               <h3 className="text-sm font-bold dark:text-gray-100 text-slate-900 mb-3">Complete Your Profile</h3>
               <div className="space-y-2">
                 {!user?.bio && (
-                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 transition group">
+                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition group">
                     <span>Add a bio</span>
                     <FiArrowRight size={12} className="group-hover:translate-x-1 transition" />
                   </Link>
                 )}
                 {(!user?.skills || user.skills.length === 0) && (
-                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 transition group">
+                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition group">
                     <span>Add your skills</span>
                     <FiArrowRight size={12} className="group-hover:translate-x-1 transition" />
                   </Link>
                 )}
                 {!user?.githubLink && (
-                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 transition group">
+                  <Link to="/profile" className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition group">
                     <span>Add GitHub profile</span>
                     <FiArrowRight size={12} className="group-hover:translate-x-1 transition" />
                   </Link>

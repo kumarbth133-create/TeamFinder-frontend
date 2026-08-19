@@ -79,10 +79,12 @@ const MainLayout = ({ children }) => {
             onClick={() => setSidebarOpen(false)}
             className={isActive(link.to) ? "nav-item-active" : "nav-item"}
           >
-            <span className={isActive(link.to) ? "text-primary-600 dark:text-primary-300" : ""}>{link.icon}</span>
+            <span className={isActive(link.to) ? "text-[#ca0019] dark:text-rose-400" : "text-slate-500 dark:text-gray-400 group-hover:text-[#ca0019] dark:group-hover:text-rose-400 transition-colors"}>
+              {link.icon}
+            </span>
             <span className="flex-1">{link.label}</span>
             {link.badge && (
-              <span className="bg-primary-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+              <span className="bg-[#ca0019] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">
                 {link.badge > 9 ? "9+" : link.badge}
               </span>
             )}
@@ -125,7 +127,7 @@ const MainLayout = ({ children }) => {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 md:hidden" onClick={() => setSidebarOpen(false)}>
-          <div className="absolute inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-xs" />
+          <div className="absolute inset-0 bg-slate-900/40 dark:bg-black/70 backdrop-blur-sm" />
           <aside
             className="absolute left-0 top-0 h-full w-60 bg-white dark:bg-dark-800 border-r border-slate-200 dark:border-dark-600 z-50 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
@@ -138,7 +140,7 @@ const MainLayout = ({ children }) => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top Header Bar */}
-        <header className="h-16 flex items-center gap-3 px-4 lg:px-6 bg-white dark:bg-dark-800 border-b border-slate-200 dark:border-dark-600 flex-shrink-0 shadow-xs">
+        <header className="h-16 flex items-center gap-3 px-4 lg:px-6 bg-white dark:bg-dark-800 border-b border-slate-200 dark:border-dark-600 flex-shrink-0 shadow-sm">
           {/* Mobile menu trigger */}
           <button
             className="md:hidden p-2 text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-dark-600 rounded-xl transition"
@@ -157,8 +159,9 @@ const MainLayout = ({ children }) => {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search projects, students..."
                 className="w-full bg-slate-100 dark:bg-dark-900 border border-slate-200 dark:border-dark-600 text-slate-800 dark:text-gray-200 rounded-xl pl-9 pr-4 py-2 text-sm
-                           focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500
-                           placeholder-slate-400 dark:placeholder-gray-500 transition"
+                           hover:border-[#ca0019]/60 hover:shadow-sm hover:shadow-[#ca0019]/10
+                           focus:outline-none focus:ring-2 focus:ring-[#ca0019]/25 focus:border-[#ca0019] focus:shadow-md focus:shadow-[#ca0019]/15
+                           placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200"
               />
             </div>
           </form>

@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import API from "../../api/axios";
 import MainLayout from "../../components/layout/MainLayout";
@@ -93,17 +93,26 @@ const Mentors = () => {
   return (
     <MainLayout>
       <div className="space-y-6">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-emerald-900/40 via-dark-800 to-dark-800 p-6 rounded-xl border border-emerald-800/30">
-          <div>
-            <div className="flex items-center gap-2 text-primary-400 font-semibold text-sm mb-1">
-              <FiAward size={18} />
-              <span>Project & Career Mentors</span>
+        {/* Header (Vibrant Crimson Gradient Banner matching Dashboard) */}
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#990012] via-[#ca0019] to-[#e6001c] text-white py-4 px-5 sm:py-5 sm:px-6 shadow-lg shadow-[#ca0019]/25 border border-white/20 hover:shadow-xl hover:shadow-[#ca0019]/30 transition-all duration-300">
+          <div className="absolute -top-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="relative flex items-center gap-4 z-10">
+            <div className="p-3 rounded-2xl bg-white/15 text-white border border-white/30 backdrop-blur-sm flex items-center justify-center shrink-0 shadow-sm">
+              <FiAward size={24} />
             </div>
-            <h1 className="text-2xl font-bold text-white">Find Mentors to Guide You</h1>
-            <p className="text-sm text-gray-400 mt-1 max-w-xl">
-              Connect with experienced engineers, architects, and technical leads who assist student teams in code review, architecture, AI/ML, and career growth.
-            </p>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="text-[11px] font-black uppercase tracking-wider text-white/90">
+                  Project & Career Mentors
+                </span>
+                <span className="text-[10px] bg-white/20 text-white px-2.5 py-0.5 rounded-full font-bold border border-white/30">
+                  Guidance
+                </span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-black text-white leading-tight">
+                Find Mentors to Guide You
+              </h1>
+            </div>
           </div>
         </div>
 
@@ -111,7 +120,7 @@ const Mentors = () => {
         <div className="card space-y-3">
           <form onSubmit={handleSearch} className="flex gap-2">
             <div className="relative flex-1">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={15} />
+              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500" size={15} />
               <input
                 type="text"
                 value={search}
@@ -177,7 +186,7 @@ const Mentors = () => {
           />
         ) : (
           <>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-slate-500 dark:text-gray-400">
               Showing {mentors.length} available mentor{mentors.length !== 1 ? "s" : ""}
             </p>
 
@@ -191,27 +200,27 @@ const Mentors = () => {
                       <div>
                         <Link
                           to={`/mentors/${mentor._id}`}
-                          className="font-bold text-gray-100 hover:text-primary-400 transition text-base block truncate"
+                          className="font-bold text-slate-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition text-base block truncate"
                         >
                           {mentor.name}
                         </Link>
-                        <p className="text-xs font-medium text-primary-400">{mentor.title}</p>
-                        <p className="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
+                        <p className="text-xs font-medium text-primary-600 dark:text-primary-400">{mentor.title}</p>
+                        <p className="text-xs text-slate-500 dark:text-gray-400 flex items-center gap-1 mt-0.5">
                           <FiBriefcase size={12} /> {mentor.company} • {mentor.experience}
                         </p>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1 bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-md text-xs font-semibold">
+                    <div className="flex items-center gap-1 bg-amber-500/10 text-amber-500 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-md text-xs font-semibold">
                       <FiStar size={12} className="fill-amber-400" />
                       <span>{mentor.rating?.toFixed(1) || "4.9"}</span>
-                      <span className="text-gray-500 text-[10px]">({mentor.reviewsCount || 15})</span>
+                      <span className="text-slate-400 dark:text-gray-500 text-[10px]">({mentor.reviewsCount || 15})</span>
                     </div>
                   </div>
 
                   {/* Bio */}
                   {mentor.bio && (
-                    <p className="text-xs text-gray-400 line-clamp-2 mb-4 leading-relaxed">
+                    <p className="text-xs text-slate-600 dark:text-gray-400 line-clamp-2 mb-4 leading-relaxed">
                       {mentor.bio}
                     </p>
                   )}
@@ -219,33 +228,33 @@ const Mentors = () => {
                   {/* Expertise Tags */}
                   {mentor.expertise?.length > 0 && (
                     <div className="mb-4">
-                      <p className="text-[11px] uppercase tracking-wider font-semibold text-gray-500 mb-1.5">Domain Expertise</p>
+                      <p className="text-[11px] uppercase tracking-wider font-semibold text-slate-500 dark:text-gray-400 mb-1.5">Domain Expertise</p>
                       <div className="flex flex-wrap gap-1.5">
                         {mentor.expertise.slice(0, 5).map((exp) => (
                           <SkillBadge key={exp} skill={exp} />
                         ))}
                         {mentor.expertise.length > 5 && (
-                          <span className="text-xs text-gray-500 flex items-center">+{mentor.expertise.length - 5} more</span>
+                          <span className="text-xs text-slate-500 dark:text-gray-400 flex items-center">+{mentor.expertise.length - 5} more</span>
                         )}
                       </div>
                     </div>
                   )}
 
                   {/* Availability */}
-                  <div className="text-xs text-gray-500 flex items-center gap-1.5 mb-4 bg-dark-900/60 p-2 rounded-lg border border-dark-600">
-                    <FiClock size={13} className="text-primary-400" />
+                  <div className="text-xs text-slate-600 dark:text-gray-400 flex items-center gap-1.5 mb-4 bg-slate-50 dark:bg-dark-900/60 p-2 rounded-xl border border-slate-200 dark:border-dark-600">
+                    <FiClock size={13} className="text-primary-600 dark:text-primary-400" />
                     <span>{mentor.availability || "Available for Mentorship"}</span>
                   </div>
 
                   {/* Action Bar */}
-                  <div className="flex items-center justify-between pt-3 border-t border-dark-600 mt-auto">
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-dark-600 mt-auto">
                     <div className="flex gap-3">
                       {mentor.githubLink && (
                         <a
                           href={mentor.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-primary-400 transition"
+                          className="text-slate-400 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition"
                         >
                           <FiGithub size={16} />
                         </a>
@@ -255,7 +264,7 @@ const Mentors = () => {
                           href={mentor.linkedinLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-gray-400 hover:text-primary-400 transition"
+                          className="text-slate-400 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition"
                         >
                           <FiLinkedin size={16} />
                         </a>

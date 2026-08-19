@@ -47,11 +47,11 @@ const AdminStudents = () => {
   return (
     <AdminLayout>
       <div className="space-y-5">
-        <h1 className="text-xl font-bold text-white">Manage Students</h1>
+        <h1 className="text-xl font-bold dark:text-white text-slate-900">Manage Students</h1>
 
         <form onSubmit={(e) => { e.preventDefault(); fetchStudents(search); }} className="flex gap-2 max-w-md">
           <div className="relative flex-1">
-            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={14} />
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500" size={14} />
             <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
               placeholder="Search students..." className="input-field pl-9" />
           </div>
@@ -62,8 +62,8 @@ const AdminStudents = () => {
           <div className="flex justify-center py-20"><Spinner size="lg" /></div>
         ) : (
           <div className="card p-0 overflow-hidden">
-            <div className="px-5 py-3 border-b border-dark-600 flex items-center justify-between">
-              <p className="text-xs text-gray-500">{students.length} students</p>
+            <div className="px-5 py-3 border-b border-slate-200 dark:border-dark-600 flex items-center justify-between">
+              <p className="text-xs text-slate-500 dark:text-gray-400">{students.length} students</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -83,28 +83,28 @@ const AdminStudents = () => {
                       <td className="table-cell">
                         <div className="flex items-center gap-2">
                           <Avatar src={student.profilePicture} name={student.name} size="sm" />
-                          <span className="font-medium text-gray-200">{student.name}</span>
+                          <span className="font-medium text-slate-900 dark:text-gray-200">{student.name}</span>
                         </div>
                       </td>
-                      <td className="table-cell text-gray-400">{student.email}</td>
-                      <td className="table-cell text-gray-500">{student.college || "—"}</td>
+                      <td className="table-cell text-slate-600 dark:text-gray-400">{student.email}</td>
+                      <td className="table-cell text-slate-500 dark:text-gray-400">{student.college || "—"}</td>
                       <td className="table-cell">
                         <span className={student.isActive ? "badge-green" : "badge-red"}>
                           {student.isActive ? "Active" : "Banned"}
                         </span>
                       </td>
-                      <td className="table-cell text-gray-600 text-xs">
+                      <td className="table-cell text-slate-400 dark:text-gray-500 text-xs">
                         {new Date(student.createdAt).toLocaleDateString()}
                       </td>
                       <td className="table-cell text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button onClick={() => handleToggle(student._id)}
-                            className={`text-xl transition ${student.isActive ? "text-green-500 hover:text-red-400" : "text-gray-600 hover:text-green-400"}`}
+                            className={`text-xl transition ${student.isActive ? "text-emerald-500 hover:text-red-500" : "text-slate-400 dark:text-gray-500 hover:text-emerald-500"}`}
                             title={student.isActive ? "Ban" : "Activate"}>
                             {student.isActive ? <FiToggleRight /> : <FiToggleLeft />}
                           </button>
                           <button onClick={() => setDeleteTarget(student)}
-                            className="text-gray-600 hover:text-red-400 transition p-1" title="Delete">
+                            className="text-slate-400 dark:text-gray-500 hover:text-red-600 dark:hover:text-red-400 transition p-1" title="Delete">
                             <FiTrash2 size={15} />
                           </button>
                         </div>

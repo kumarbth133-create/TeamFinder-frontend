@@ -60,20 +60,20 @@ const CreateProject = () => {
     } finally { setLoading(false); }
   };
 
-  const labelClass = "block text-xs font-medium text-gray-400 mb-1.5 uppercase tracking-wider";
-  const errClass = "text-red-400 text-xs mt-1";
+  const labelClass = "block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider";
+  const errClass = "text-primary-600 dark:text-primary-400 text-xs mt-1";
 
   return (
     <MainLayout>
       <div className="max-w-2xl">
-        <h1 className="text-xl font-bold text-white mb-5">Create New Project</h1>
+        <h1 className="text-xl font-bold dark:text-white text-slate-900 mb-5">Create New Project</h1>
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
             <div>
               <label className={labelClass}>Project Title *</label>
               <input type="text" name="title" value={formData.title} onChange={handleChange}
                 placeholder="e.g. AI Study Planner" maxLength={100}
-                className={`input-field ${errors.title ? "border-red-600" : ""}`} />
+                className={`input-field ${errors.title ? "border-primary-600" : ""}`} />
               {errors.title && <p className={errClass}>{errors.title}</p>}
             </div>
 
@@ -81,8 +81,8 @@ const CreateProject = () => {
               <label className={labelClass}>Description *</label>
               <textarea name="description" value={formData.description} onChange={handleChange}
                 rows={4} maxLength={1000} placeholder="Describe your project goals..."
-                className={`input-field resize-none ${errors.description ? "border-red-600" : ""}`} />
-              <p className="text-xs text-gray-600 mt-1 text-right">{formData.description.length}/1000</p>
+                className={`input-field resize-none ${errors.description ? "border-primary-600" : ""}`} />
+              <p className="text-xs text-slate-400 dark:text-gray-500 mt-1 text-right">{formData.description.length}/1000</p>
               {errors.description && <p className={errClass}>{errors.description}</p>}
             </div>
 
@@ -104,18 +104,18 @@ const CreateProject = () => {
               <div>
                 <label className={labelClass}>Max Team Size *</label>
                 <input type="number" name="maxMembers" value={formData.maxMembers} onChange={handleChange}
-                  min={2} max={20} className={`input-field ${errors.maxMembers ? "border-red-600" : ""}`} />
+                  min={2} max={20} className={`input-field ${errors.maxMembers ? "border-primary-600" : ""}`} />
                 {errors.maxMembers && <p className={errClass}>{errors.maxMembers}</p>}
               </div>
               <div>
-                <label className={labelClass}>GitHub Repo <span className="text-gray-600 normal-case">(optional)</span></label>
+                <label className={labelClass}>GitHub Repo <span className="text-slate-400 dark:text-gray-500 normal-case">(optional)</span></label>
                 <input type="url" name="githubRepo" value={formData.githubRepo} onChange={handleChange}
                   placeholder="https://github.com/..." className="input-field" />
               </div>
             </div>
 
             <div>
-              <label className={labelClass}>Tags <span className="text-gray-600 normal-case">(comma-separated, optional)</span></label>
+              <label className={labelClass}>Tags <span className="text-slate-400 dark:text-gray-500 normal-case">(comma-separated, optional)</span></label>
               <input type="text" name="tags" value={formData.tags} onChange={handleChange}
                 placeholder="AI, Web, Mobile" className="input-field" />
             </div>
