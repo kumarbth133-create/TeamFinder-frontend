@@ -1,8 +1,14 @@
 import axios from "axios";
 
-// Base URL - Vite proxy will forward /api to backend
+// Base URL - use deployed backend Vercel URL in production / build, or fallback to VITE_API_URL or proxy
+const BACKEND_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD
+    ? "https://team-finder-backend.vercel.app/api"
+    : "/api");
+
 const API = axios.create({
-  baseURL: "/api",
+  baseURL: BACKEND_URL,
   headers: { "Content-Type": "application/json" },
 });
 

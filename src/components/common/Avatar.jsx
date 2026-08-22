@@ -19,7 +19,10 @@ const Avatar = ({ src, name, size = "md", className = "" }) => {
     return n.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
   };
 
-  const imageSrc = src && src.startsWith("/uploads") ? src : src;
+  const BACKEND_URL =
+    import.meta.env.VITE_BACKEND_URL || "https://team-finder-backend.vercel.app";
+  const imageSrc =
+    src && src.startsWith("/uploads") ? `${BACKEND_URL}${src}` : src;
 
   if (imageSrc && !imgError) {
     return (
