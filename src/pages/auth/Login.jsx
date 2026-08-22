@@ -40,7 +40,13 @@ const Login = () => {
   // Redirect if already logged in
   useEffect(() => {
     if (user) {
-      navigate(user.role === "admin" ? "/admin/dashboard" : "/dashboard", { replace: true });
+      if (user.role === "admin") {
+        navigate("/admin/dashboard", { replace: true });
+      } else if (user.role === "mentor") {
+        navigate("/mentor/dashboard", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
     }
   }, [user, navigate]);
 
@@ -150,9 +156,7 @@ const Login = () => {
           {/* Left Brand Logo with Red Outline & Beta badge */}
           <div className="flex items-center gap-2.5">
             <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="p-1 rounded-xl border border-[#ca0019] shadow-sm flex items-center justify-center bg-white">
-                <AppLogo size="sm" />
-              </div>
+              <AppLogo size="sm" />
               <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white group-hover:text-[#ca0019] transition-colors">
                 Team<span className="text-[#ca0019]">Up</span>
               </span>
@@ -582,9 +586,7 @@ const Login = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-3.5 sm:pb-4 border-b border-slate-200 dark:border-dark-600">
             {/* Left: Brand */}
             <div className="flex items-center gap-3">
-              <div className="p-1 rounded-xl bg-white shadow-sm border border-[#ca0019]/40">
-                <AppLogo size="sm" />
-              </div>
+              <AppLogo size="sm" />
               <div>
                 <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white block leading-tight">
                   Team<span className="text-[#ca0019]">Up</span>
@@ -659,9 +661,7 @@ const Login = () => {
             {/* Modal Header Bar with Close Button */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <div className="p-0.5 rounded-lg border border-[#ca0019] bg-white">
-                  <AppLogo size="sm" />
-                </div>
+                <AppLogo size="sm" />
                 <span className="text-lg font-black tracking-tight text-white">
                   Team<span className="text-[#ca0019]">Up</span>
                 </span>

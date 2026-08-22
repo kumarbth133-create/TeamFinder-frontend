@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
 
-  // Register
+  // Register Student
   const register = useCallback(async (formData) => {
     setLoading(true);
     try {
@@ -23,9 +23,27 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("teamup_user", JSON.stringify(data.data));
       setUser(data.data);
       toast.success("Registration successful! Welcome to TeamUp 🎉");
-      return { success: true };
+      return { success: true, role: data.data.role || "student" };
     } catch (error) {
       const msg = error.response?.data?.message || "Registration failed";
+      toast.error(msg);
+      return { success: false, message: msg };
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Register Mentor
+  const registerMentor = useCallback(async (formData) => {
+    setLoading(true);
+    try {
+      const { data } = await API.post("/auth/register-mentor", formData);
+      localStorage.setItem("teamup_user", JSON.stringify(data.data));
+      setUser(data.data);
+      toast.success("Mentor profile created successfully! Welcome to TeamUp 🎓");
+      return { success: true, role: "mentor" };
+    } catch (error) {
+      const msg = error.response?.data?.message || "Mentor registration failed";
       toast.error(msg);
       return { success: false, message: msg };
     } finally {
@@ -84,7 +102,7 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, loading, register, login, adminLogin, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, register, registerMentor, login, adminLogin, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

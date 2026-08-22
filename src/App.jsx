@@ -1,13 +1,16 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/ThemeContext";
-import ProtectedRoute, { AdminRoute } from "./utils/ProtectedRoute";
+import ProtectedRoute, { AdminRoute, MentorRoute } from "./utils/ProtectedRoute";
 
 // Auth Pages
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import AdminLogin from "./pages/auth/AdminLogin";
+
+// Mentor Pages
+import MentorDashboard from "./pages/mentor/MentorDashboard";
 
 // Student Pages
 import Dashboard from "./pages/student/Dashboard";
@@ -31,6 +34,9 @@ import SnakeGame from "./pages/student/games/SnakeGame";
 import MemoryGame from "./pages/student/games/MemoryGame";
 import TypingRace from "./pages/student/games/TypingRace";
 
+
+import MentorRequestAction from "./pages/student/MentorRequestAction";
+
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminStudents from "./pages/admin/AdminStudents";
@@ -49,6 +55,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/mentor-request/action" element={<MentorRequestAction />} />
 
           {/* Protected Student Routes */}
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -71,6 +78,9 @@ const App = () => {
           <Route path="/game-zone/snake" element={<ProtectedRoute><SnakeGame /></ProtectedRoute>} />
           <Route path="/game-zone/memory" element={<ProtectedRoute><MemoryGame /></ProtectedRoute>} />
           <Route path="/game-zone/typing-race" element={<ProtectedRoute><TypingRace /></ProtectedRoute>} />
+
+          {/* Protected Mentor Routes */}
+          <Route path="/mentor/dashboard" element={<MentorRoute><MentorDashboard /></MentorRoute>} />
 
           {/* Protected Admin Routes */}
           <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />

@@ -7,6 +7,17 @@ const ProtectedRoute = ({ children }) => {
 
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === "admin") return <Navigate to="/admin/dashboard" replace />;
+  if (user.role === "mentor") return <Navigate to="/mentor/dashboard" replace />;
+
+  return children;
+};
+
+// Protect mentor routes
+export const MentorRoute = ({ children }) => {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== "mentor" && user.role !== "admin") return <Navigate to="/dashboard" replace />;
 
   return children;
 };

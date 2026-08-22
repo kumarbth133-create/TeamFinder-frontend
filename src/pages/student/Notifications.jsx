@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import MainLayout from "../../components/layout/MainLayout";
 import Spinner from "../../components/common/Spinner";
 import EmptyState from "../../components/common/EmptyState";
-import { FiTrash2, FiCheckCircle } from "react-icons/fi";
+import { FiTrash2, FiCheckCircle, FiAward, FiMail } from "react-icons/fi";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -21,23 +21,31 @@ const Notifications = () => {
   const markAsRead = async (id) => {
     try {
       await API.put(`/notifications/${id}/read`);
-      setNotifications((prev) => prev.map((n) => n._id === id ? { ...n, isRead: true } : n));
-    } catch { /* silent */ }
+      setNotifications((prev) =>
+        prev.map((n) => (n._id === id ? { ...n, isRead: true } : n))
+      );
+    } catch {
+      /* silent */
+    }
   };
 
   const markAllRead = async () => {
     try {
       await API.put("/notifications/read-all");
       setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
-      toast.success("All marked as read");
-    } catch { toast.error("Failed"); }
+      toast.success("All notifications marked as read");
+    } catch {
+      toast.error("Failed to mark all as read");
+    }
   };
 
   const deleteNotif = async (id) => {
     try {
       await API.delete(`/notifications/${id}`);
       setNotifications((prev) => prev.filter((n) => n._id !== id));
-    } catch { toast.error("Failed"); }
+    } catch {
+      toast.error("Failed to delete notification");
+    }
   };
 
   const unreadCount = notifications.filter((n) => !n.isRead).length;
@@ -48,68 +56,141 @@ const Notifications = () => {
     join_request_rejected: "❌",
     join_request_cancelled: "🚫",
     project_update: "📢",
+    mentor_request_sent: "📨",
+    mentor_request_accepted: "🎉",
+    mentor_request_rejected: "❌",
+    system: "🔔",
   };
 
   return (
     <MainLayout>
-      <div className="max-w-2xl space-y-5">
-        <div className="flex justify-between items-center">
+      <div className="max-w-3xl space-y-5 px-1 sm:px-0">
+        <div className="flex flex-wrap justify-between items-center gap-2">
           <h1 className="text-xl font-bold dark:text-white text-slate-900 flex items-center gap-2">
             Notifications
             {unreadCount > 0 && (
-              <span className="badge text-xs">{unreadCount} new</span>
+              <span className="badge text-xs bg-primary-100 dark:bg-primary-900/60 text-primary-700 dark:text-primary-300">
+                {unreadCount} new
+              </span>
             )}
           </h1>
           {unreadCount > 0 && (
-            <button onClick={markAllRead}
-              className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 transition font-medium">
+            <button
+              onClick={markAllRead}
+              className="text-xs text-primary-600 dark:text-primary-400 hover:underline flex items-center gap-1 transition font-medium"
+            >
               <FiCheckCircle size={13} /> Mark all read
             </button>
           )}
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-20"><Spinner size="lg" /></div>
+          <div className="flex justify-center py-20">
+            <Spinner size="lg" />
+          </div>
         ) : notifications.length === 0 ? (
-          <EmptyState icon="🔔" title="No notifications" description="You're all caught up!" />
+          <EmptyState
+            icon="🔔"
+            title="No notifications"
+            description="You're all caught up!"
+          />
         ) : (
-          <div className="space-y-2">
-            {notifications.map((notif) => (
-              <div
-                key={notif._id}
-                onClick={() => !notif.isRead && markAsRead(notif._id)}
-                className={`card cursor-pointer hover:border-primary-500/40 transition ${
-                  !notif.isRead ? "border-primary-500/40 bg-primary-50/50 dark:bg-primary-950/20" : ""
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <span className="text-xl flex-shrink-0 mt-0.5">{typeEmoji[notif.type] || "🔔"}</span>
-                  <div className="flex-1 min-w-0">
-                    <p className={`text-sm ${!notif.isRead ? "font-medium text-slate-900 dark:text-gray-100" : "text-slate-500 dark:text-gray-400"}`}>
-                      {notif.message}
-                    </p>
-                    {notif.project && (
-                      <Link to={`/projects/${notif.project._id}`}
-                        className="text-xs text-primary-600 dark:text-primary-400 hover:underline mt-1 block font-medium"
-                        onClick={(e) => e.stopPropagation()}>
-                        {notif.project.title} →
-                      </Link>
-                    )}
-                    <p className="text-xs text-slate-400 dark:text-gray-500 mt-1">
-                      {new Date(notif.createdAt).toLocaleString()}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    {!notif.isRead && <span className="w-2 h-2 bg-primary-600 rounded-full" />}
-                    <button
-                      onClick={(e) => { e.stopPropagation(); deleteNotif(notif._id); }}
-                      className="text-slate-400 hover:text-red-600 dark:text-gray-500 dark:hover:text-red-400 transition p-1">
-                      <FiTrash2 size={13} />
-                    </button>
+          <div className="space-y-3">
+            {notifications.map((notif) => {
+              const isAccepted =
+                notif.type === "mentor_request_accepted" ||
+                notif.type === "join_request_accepted";
+
+              return (
+                <div
+                  key={notif._id}
+                  onClick={() => !notif.isRead && markAsRead(notif._id)}
+                  className={`card p-4 sm:p-5 cursor-pointer transition relative overflow-hidden ${
+                    !notif.isRead
+                      ? isAccepted
+                        ? "border-emerald-500/50 bg-emerald-50/50 dark:bg-emerald-950/20 shadow-sm"
+                        : "border-primary-500/40 bg-primary-50/50 dark:bg-primary-950/20"
+                      : "hover:border-primary-500/30"
+                  }`}
+                >
+                  <div className="flex items-start gap-3 sm:gap-3.5">
+                    <span className="text-xl sm:text-2xl flex-shrink-0 mt-0.5 select-none">
+                      {typeEmoji[notif.type] || "🔔"}
+                    </span>
+
+                    <div className="flex-1 min-w-0">
+                      {notif.title && (
+                        <h4
+                          className={`text-xs sm:text-sm font-bold mb-1 truncate ${
+                            isAccepted
+                              ? "text-emerald-700 dark:text-emerald-300"
+                              : "text-slate-900 dark:text-gray-100"
+                          }`}
+                        >
+                          {notif.title}
+                        </h4>
+                      )}
+
+                      <p
+                        className={`text-xs sm:text-sm leading-relaxed ${
+                          !notif.isRead
+                            ? "font-medium text-slate-800 dark:text-gray-200"
+                            : "text-slate-600 dark:text-gray-400"
+                        }`}
+                      >
+                        {notif.message}
+                      </p>
+
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2 text-xs">
+                        {notif.project && (
+                          <Link
+                            to={`/projects/${notif.project._id}`}
+                            className="text-xs text-primary-600 dark:text-primary-400 hover:underline font-medium flex items-center gap-1 truncate max-w-[200px]"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Project: {notif.project.title} →
+                          </Link>
+                        )}
+
+                        {notif.mentor && (
+                          <Link
+                            to={`/mentors/${notif.mentor._id}`}
+                            className="text-xs text-primary-600 dark:text-primary-400 hover:underline font-semibold flex items-center gap-1 truncate max-w-[220px]"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <FiAward size={12} className="shrink-0" /> Mentor: {notif.mentor.name} →
+                          </Link>
+                        )}
+
+                        <span className="text-[10px] sm:text-[11px] text-slate-400 dark:text-gray-500">
+                          {new Date(notif.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                      {!notif.isRead && (
+                        <span
+                          className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${
+                            isAccepted ? "bg-emerald-500" : "bg-primary-600"
+                          }`}
+                        />
+                      )}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteNotif(notif._id);
+                        }}
+                        className="text-slate-400 hover:text-red-600 dark:text-gray-500 dark:hover:text-red-400 transition p-1 rounded hover:bg-slate-100 dark:hover:bg-dark-700"
+                        title="Delete notification"
+                      >
+                        <FiTrash2 size={13} className="sm:text-sm" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

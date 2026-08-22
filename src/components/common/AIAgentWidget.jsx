@@ -363,7 +363,7 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
                 <img
                   src={logoImg}
                   alt="TeamUp AI"
-                  className="w-full h-full object-contain scale-[3.2] translate-x-[6%] translate-y-[32%] transform origin-center"
+                  className="w-full h-full object-contain scale-[1.45] transform origin-center"
                 />
               </div>
               {/* Green Online Radar Pulse */}
@@ -411,7 +411,7 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
                 <img
                   src={logoImg}
                   alt="TeamUp AI"
-                  className="w-full h-full object-contain scale-[3.3] translate-x-[6%] translate-y-[32%] transform origin-center"
+                  className="w-full h-full object-contain scale-[1.45] transform origin-center"
                 />
                 <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-900"></span>
               </div>
@@ -478,7 +478,7 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
                       <img
                         src={logoImg}
                         alt="AI"
-                        className="w-full h-full object-contain scale-[3.3] translate-x-[6%] translate-y-[32%] transform origin-center"
+                        className="w-full h-full object-contain scale-[1.45] transform origin-center"
                       />
                     </div>
                   )}
@@ -520,7 +520,7 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
                   <img
                     src={logoImg}
                     alt="AI"
-                    className="w-full h-full object-contain scale-[3.3] translate-x-[6%] translate-y-[32%] transform origin-center"
+                    className="w-full h-full object-contain scale-[1.45] transform origin-center"
                   />
                 </div>
                 <div className="bg-white dark:bg-dark-750 border border-slate-200 dark:border-dark-600 rounded-2xl px-4 py-2.5 flex items-center gap-2 shadow-xs">
