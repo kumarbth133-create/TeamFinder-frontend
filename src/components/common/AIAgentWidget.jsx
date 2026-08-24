@@ -358,18 +358,18 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
             aria-label="Open TeamUp AI Project Copilot"
           >
             {/* Logo Badge with External Online Radar Ping */}
-            <div className="relative flex-shrink-0">
-              <div className="w-8 h-8 rounded-full bg-white border-2 border-[#ca0019] shadow-md flex items-center justify-center overflow-hidden">
+            <div className="relative flex-shrink-0 flex items-center justify-center">
+              <div className="w-7 h-7 flex items-center justify-center">
                 <img
                   src={logoImg}
                   alt="TeamUp AI"
-                  className="w-full h-full object-contain scale-[1.45] transform origin-center"
+                  className="w-full h-full object-contain"
                 />
               </div>
               {/* Green Online Radar Pulse */}
-              <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">
+              <span className="absolute -bottom-0.5 -right-0.5 flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-80"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 border-2 border-slate-950"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border-2 border-slate-950"></span>
               </span>
             </div>
 
@@ -407,13 +407,13 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
           {/* Header */}
           <div className="px-4 py-3 bg-gradient-to-r from-slate-900 via-dark-900 to-slate-950 text-white flex items-center justify-between border-b border-slate-800 flex-shrink-0">
             <div className="flex items-center gap-2.5">
-              <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-white border border-[#ca0019]/50 overflow-hidden shadow-sm flex-shrink-0">
+              <div className="relative flex items-center justify-center w-7 h-7 flex-shrink-0">
                 <img
                   src={logoImg}
                   alt="TeamUp AI"
-                  className="w-full h-full object-contain scale-[1.45] transform origin-center"
+                  className="w-full h-full object-contain"
                 />
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-slate-900"></span>
+                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border-2 border-slate-900"></span>
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
@@ -474,11 +474,11 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
               return (
                 <div key={msg.id} className={`flex gap-2.5 ${isAi ? "items-start" : "items-end justify-end"}`}>
                   {isAi && (
-                    <div className="w-7 h-7 rounded-xl bg-white border border-[#ca0019]/40 flex items-center justify-center overflow-hidden shadow-xs flex-shrink-0 mt-0.5">
+                    <div className="w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <img
                         src={logoImg}
                         alt="AI"
-                        className="w-full h-full object-contain scale-[1.45] transform origin-center"
+                        className="w-full h-full object-contain"
                       />
                     </div>
                   )}
@@ -516,11 +516,11 @@ Feel free to ask me for a **tech stack recommendation**, **4-week sprint roadmap
             {/* Loading / Thinking Indicator */}
             {loading && (
               <div className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400 text-xs p-2">
-                <div className="w-7 h-7 rounded-xl bg-white border border-[#ca0019]/40 flex items-center justify-center overflow-hidden shadow-xs flex-shrink-0 animate-pulse">
+                <div className="w-6 h-6 flex items-center justify-center flex-shrink-0 animate-pulse">
                   <img
                     src={logoImg}
                     alt="AI"
-                    className="w-full h-full object-contain scale-[1.45] transform origin-center"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="bg-white dark:bg-dark-750 border border-slate-200 dark:border-dark-600 rounded-2xl px-4 py-2.5 flex items-center gap-2 shadow-xs">

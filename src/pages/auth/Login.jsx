@@ -75,7 +75,7 @@ const Login = () => {
     totalStudents: 0,
     totalProjects: 0,
     totalSkillsMatched: 0,
-    evaluationAccuracy: 100,
+    evaluationAccuracy: 99,
   });
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const Login = () => {
             totalStudents: data.data.totalStudents || 0,
             totalProjects: data.data.totalProjects || 0,
             totalSkillsMatched: data.data.totalSkillsMatched || 0,
-            evaluationAccuracy: data.data.evaluationAccuracy || 100,
+            evaluationAccuracy: data.data.evaluationAccuracy ?? 99,
           });
         }
       } catch {
@@ -147,10 +147,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 overflow-x-hidden font-sans relative">
+    <div className="min-h-screen w-full flex flex-col transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-dark-900 dark:text-slate-100 overflow-x-hidden font-sans relative">
 
       {/* ── Fixed Floating Navigation Bar with Curved Corners ── */}
-      <header className="fixed top-2 sm:top-3 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white/90 dark:bg-slate-950/90 backdrop-blur-md text-slate-900 dark:text-white border border-slate-200/90 dark:border-slate-800/90 rounded-2xl sm:rounded-3xl z-50 shadow-md shadow-black/5 transition-all duration-200">
+      <header className="fixed top-2 sm:top-3 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl bg-white/85 dark:bg-dark-800/85 backdrop-blur-md text-slate-900 dark:text-white border border-slate-200/80 dark:border-dark-600/80 rounded-2xl sm:rounded-3xl z-50 shadow-md shadow-black/5 transition-all duration-200">
         <div className="px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
 
           {/* Left Brand Logo with Red Outline & Beta badge */}
@@ -168,22 +168,22 @@ const Login = () => {
 
           {/* Center Navigation Links (Slimmer & Clean Spacing) */}
           <nav className="hidden md:flex items-center gap-1.5 sm:gap-2 text-sm font-bold text-slate-700 dark:text-slate-200">
-            <Link to="/" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <Link to="/" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               Home
             </Link>
-            <a href="#about" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <a href="#about" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               About Us
             </a>
-            <a href="#features" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <a href="#features" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               Features
             </a>
-            <a href="#community" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <a href="#community" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               Community
             </a>
-            <a href="#faq" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <a href="#faq" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               FAQ
             </a>
-            <a href="#contact" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+            <a href="#contact" className="hover:text-[#ca0019] px-3 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-700/60 transition-all">
               Contact
             </a>
           </nav>
@@ -203,7 +203,7 @@ const Login = () => {
       </header>
 
       {/* ── Main Hero Card Layout (Matching Uniques Red Design) ── */}
-      <section id="hero" className="px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-6 max-w-7xl mx-auto w-full">
+      <section id="hero" className="px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 max-w-7xl mx-auto w-full">
 
         {/* Large Curved Crimson Red Hero Card Container (#ca0019 mixed theme) */}
         <div className="w-full rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#880010] via-[#ca0019] to-[#e6001c] text-white p-6 sm:p-10 lg:p-14 shadow-2xl shadow-[#ca0019]/30 border border-white/20 border-t-white/30 relative overflow-hidden">
@@ -257,31 +257,31 @@ const Login = () => {
           </div>
         </div>
 
-        {/* ── Bottom Dark Capsule Stats Bar (Matching screenshot exact bottom capsule!) ── */}
-        <div className="mt-6 w-full rounded-[24px] sm:rounded-[30px] bg-slate-900 dark:bg-slate-950 text-white p-6 border border-slate-800 shadow-2xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800/60">
+        {/* ── Blended Stats Bar ── */}
+        <div className="mt-6 w-full rounded-[24px] sm:rounded-[30px] bg-white dark:bg-dark-800/90 text-slate-900 dark:text-white p-6 border border-slate-200/80 dark:border-dark-600 shadow-xl shadow-slate-200/50 dark:shadow-none transition-colors duration-300">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200 dark:divide-dark-600">
             <div className="pt-2 md:pt-0">
-              <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">{stats.totalStudents}</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Students Joined</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.totalStudents}</p>
+              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Students Joined</p>
             </div>
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">{stats.totalProjects}</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Project Teams</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.totalProjects}</p>
+              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Project Teams</p>
             </div>
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">{stats.totalSkillsMatched}</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Skills Matched</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.totalSkillsMatched}</p>
+              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Skills Matched</p>
             </div>
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-3xl font-black text-white tracking-tight">{stats.evaluationAccuracy}%</p>
-              <p className="text-xs font-semibold text-slate-400 mt-1 uppercase tracking-wider">Evaluation Accuracy</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.evaluationAccuracy}%</p>
+              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Evaluation Accuracy</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── About Us Section ── */}
-      <section id="about" className="py-20 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-red-900/30 transition-colors scroll-mt-24">
+      <section id="about" className="py-16 sm:py-20 transition-colors scroll-mt-24">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
             About <span className="text-[#ca0019]">TeamUp</span>
@@ -290,8 +290,8 @@ const Login = () => {
             TeamUp is built for college students, developers, designers, and creators to connect, form project teams based on complementary skills, and showcase innovative projects seamlessly.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-left">
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-red-950/20 border border-slate-200/90 dark:border-red-900/30 shadow-lg dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
-              <h3 className="text-base sm:text-lg lg:text-xl font-black text-[#ca0019] dark:text-red-400 mb-2.5">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
+              <h3 className="text-base sm:text-lg lg:text-xl font-black text-[#ca0019] dark:text-rose-400 mb-2.5">
                 Find & Build
               </h3>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -299,7 +299,7 @@ const Login = () => {
               </p>
             </div>
 
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-red-950/20 border border-slate-200/90 dark:border-red-900/30 shadow-lg dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
               <h3 className="text-base sm:text-lg lg:text-xl font-black text-rose-600 dark:text-rose-400 mb-2.5">
                 Learn & Get Guidance
               </h3>
@@ -308,7 +308,7 @@ const Login = () => {
               </p>
             </div>
 
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-red-950/20 border border-slate-200/90 dark:border-red-900/30 shadow-lg dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all duration-300">
               <h3 className="text-base sm:text-lg lg:text-xl font-black text-amber-600 dark:text-amber-400 mb-2.5">
                 Ask & Enjoy
               </h3>
@@ -321,7 +321,7 @@ const Login = () => {
       </section>
 
       {/* ── Features Section ── */}
-      <section id="features" className="py-20 bg-white dark:bg-slate-900/60 border-t border-slate-200 dark:border-red-900/30 transition-colors scroll-mt-24">
+      <section id="features" className="py-16 sm:py-20 transition-colors scroll-mt-24">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
@@ -334,7 +334,7 @@ const Login = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {/* 01: Skill Search */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   01
@@ -345,7 +345,7 @@ const Login = () => {
             </div>
 
             {/* 02: Team Creation */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   02
@@ -356,7 +356,7 @@ const Login = () => {
             </div>
 
             {/* 03: Join Requests */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   03
@@ -367,7 +367,7 @@ const Login = () => {
             </div>
 
             {/* 04: Courses */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   04
@@ -378,7 +378,7 @@ const Login = () => {
             </div>
 
             {/* 05: Mentors */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   05
@@ -389,7 +389,7 @@ const Login = () => {
             </div>
 
             {/* 06: Game Zone */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   06
@@ -400,7 +400,7 @@ const Login = () => {
             </div>
 
             {/* 07: AI Chatbot */}
-            <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md dark:shadow-none hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 hover:scale-[1.02] transition-all">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#ca0019]/15 text-[#ca0019] dark:bg-[#ca0019]/25 dark:text-rose-400 flex items-center justify-center font-extrabold shrink-0">
                   07
@@ -414,7 +414,7 @@ const Login = () => {
       </section>
 
       {/* ── Community Section ── */}
-      <section id="community" className="py-20 bg-slate-50 dark:bg-slate-900/80 border-t border-slate-200 dark:border-red-900/30 transition-colors relative overflow-hidden scroll-mt-24">
+      <section id="community" className="py-16 sm:py-20 transition-colors relative overflow-hidden scroll-mt-24">
         {/* Glow ambient background */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#ca0019]/10 via-[#ca0019]/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
 
@@ -434,7 +434,7 @@ const Login = () => {
           {/* 3 Feature Pillar Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left">
             {/* Card 1: Be Part of Something Bigger */}
-            <div className="p-6 rounded-3xl bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/50 dark:hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
               <div className="flex items-center gap-3.5 mb-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#ca0019] to-rose-500 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow-md shadow-red-600/20 group-hover:scale-110 transition-transform">
                   🌟
@@ -449,7 +449,7 @@ const Login = () => {
             </div>
 
             {/* Card 2: Share & Discover */}
-            <div className="p-6 rounded-3xl bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/50 dark:hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
               <div className="flex items-center gap-3.5 mb-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#ca0019] to-rose-500 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow-md shadow-red-600/20 group-hover:scale-110 transition-transform">
                   💡
@@ -464,7 +464,7 @@ const Login = () => {
             </div>
 
             {/* Card 3: Turn Ideas Into Reality */}
-            <div className="p-6 rounded-3xl bg-white dark:bg-slate-950 border border-slate-200/90 dark:border-red-900/30 shadow-md hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
+            <div className="p-6 rounded-3xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm hover:shadow-md hover:border-[#ca0019]/50 dark:hover:border-[#ca0019]/50 hover:scale-[1.02] transition-all group">
               <div className="flex items-center gap-3.5 mb-3.5">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#ca0019] to-rose-500 text-white flex items-center justify-center text-xl font-bold shrink-0 shadow-md shadow-red-600/20 group-hover:scale-110 transition-transform">
                   🚀
@@ -489,7 +489,7 @@ const Login = () => {
       </section>
 
       {/* ── FAQ Section ── */}
-      <section id="faq" className="py-20 bg-slate-100 dark:bg-slate-950 border-t border-slate-200 dark:border-red-900/30 transition-colors scroll-mt-24">
+      <section id="faq" className="py-16 sm:py-20 transition-colors scroll-mt-24">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
@@ -521,7 +521,7 @@ const Login = () => {
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200/90 dark:border-red-900/30 shadow-sm dark:shadow-none overflow-hidden transition-all duration-300 hover:border-[#ca0019]/60"
+                  className="rounded-2xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 shadow-sm overflow-hidden transition-all duration-300 hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60"
                 >
                   <button
                     type="button"
@@ -535,7 +535,7 @@ const Login = () => {
                       className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center transition-all duration-300 shrink-0 ${
                         isOpen
                           ? "bg-[#ca0019] text-white rotate-180 shadow-md shadow-red-900/30"
-                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rotate-0"
+                          : "bg-slate-100 dark:bg-dark-700 text-slate-700 dark:text-slate-300 rotate-0"
                       }`}
                     >
                       <FiChevronUp size={16} />
@@ -543,7 +543,7 @@ const Login = () => {
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 pb-4 pt-1 sm:px-5 sm:pb-4.5 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-100 dark:border-slate-800/80">
+                    <div className="px-4 pb-4 pt-1 sm:px-5 sm:pb-4.5 text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed border-t border-slate-100 dark:border-dark-600">
                       <p>{item.a}</p>
                     </div>
                   )}
@@ -555,7 +555,7 @@ const Login = () => {
       </section>
 
       {/* ── Contact Section ── */}
-      <section id="contact" className="py-20 bg-white dark:bg-slate-900/60 border-t border-slate-200 dark:border-red-900/30 transition-colors scroll-mt-24">
+      <section id="contact" className="py-16 sm:py-20 transition-colors scroll-mt-24">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mb-3">
             Contact <span className="text-[#ca0019]">Us</span>
@@ -565,14 +565,14 @@ const Login = () => {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-red-900/30 text-center shadow-sm dark:shadow-none hover:border-[#ca0019]/60 transition-all">
+            <div className="p-6 rounded-2xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 text-center shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 transition-all">
               <div className="text-[#ca0019] text-xl font-bold mb-2">📧 Email Support</div>
               <a href="mailto:kundanbth133@gmail.com" className="text-xs text-slate-600 dark:text-slate-400 hover:text-[#ca0019] transition-colors">
                 kundanbth133@gmail.com
               </a>
             </div>
 
-            <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-red-900/30 text-center shadow-sm dark:shadow-none hover:border-[#ca0019]/60 transition-all">
+            <div className="p-6 rounded-2xl bg-white dark:bg-dark-800/80 border border-slate-200/80 dark:border-dark-600 text-center shadow-sm hover:shadow-md hover:border-[#ca0019]/60 dark:hover:border-[#ca0019]/60 transition-all">
               <div className="text-rose-500 dark:text-rose-400 text-xl font-bold mb-2">💬 Student Community</div>
               <p className="text-xs text-slate-600 dark:text-slate-400">discord.gg/teamfinder</p>
             </div>
@@ -580,30 +580,30 @@ const Login = () => {
         </div>
       </section>
 
-      {/* ── Compact & Sleek Light Gray Modern Footer ── */}
-      <footer className="bg-slate-100 dark:bg-dark-800 text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-dark-600 relative overflow-hidden py-4 sm:py-5">
+      {/* ── Compact & Sleek Distinct Gray Modern Footer ── */}
+      <footer className="bg-gray-200 dark:bg-dark-800 text-gray-700 dark:text-gray-300 border-t border-gray-300 dark:border-dark-600 relative overflow-hidden py-4 sm:py-5 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-3.5 sm:pb-4 border-b border-slate-200 dark:border-dark-600">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 pb-3.5 sm:pb-4 border-b border-gray-300 dark:border-dark-600">
             {/* Left: Brand */}
             <div className="flex items-center gap-3">
               <AppLogo size="sm" />
               <div>
-                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 dark:text-white block leading-tight">
+                <span className="text-lg sm:text-xl font-black tracking-tight text-gray-900 dark:text-white block leading-tight">
                   Team<span className="text-[#ca0019]">Up</span>
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  Built by <strong className="text-slate-700 dark:text-slate-300 font-semibold">The Uniques Community</strong>
+                <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">
+                  Built by <strong className="text-gray-900 dark:text-gray-200 font-semibold">The Uniques Community</strong>
                 </span>
               </div>
             </div>
 
             {/* Center: In-page Navigation */}
-            <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm font-medium">
-              <a href="#about" className="text-slate-600 hover:text-[#ca0019] dark:text-slate-300 dark:hover:text-rose-400 transition-colors">About</a>
-              <a href="#features" className="text-slate-600 hover:text-[#ca0019] dark:text-slate-300 dark:hover:text-rose-400 transition-colors">Features</a>
-              <a href="#community" className="text-slate-600 hover:text-[#ca0019] dark:text-slate-300 dark:hover:text-rose-400 transition-colors">Community</a>
-              <a href="#faq" className="text-slate-600 hover:text-[#ca0019] dark:text-slate-300 dark:hover:text-rose-400 transition-colors">FAQ</a>
-              <a href="#contact" className="text-slate-600 hover:text-[#ca0019] dark:text-slate-300 dark:hover:text-rose-400 transition-colors">Contact</a>
+            <nav className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm font-semibold">
+              <a href="#about" className="text-gray-700 hover:text-[#ca0019] dark:text-gray-300 dark:hover:text-rose-400 transition-colors">About</a>
+              <a href="#features" className="text-gray-700 hover:text-[#ca0019] dark:text-gray-300 dark:hover:text-rose-400 transition-colors">Features</a>
+              <a href="#community" className="text-gray-700 hover:text-[#ca0019] dark:text-gray-300 dark:hover:text-rose-400 transition-colors">Community</a>
+              <a href="#faq" className="text-gray-700 hover:text-[#ca0019] dark:text-gray-300 dark:hover:text-rose-400 transition-colors">FAQ</a>
+              <a href="#contact" className="text-gray-700 hover:text-[#ca0019] dark:text-gray-300 dark:hover:text-rose-400 transition-colors">Contact</a>
             </nav>
 
             {/* Right: Social Links & Back to Top */}
@@ -613,7 +613,7 @@ const Login = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub"
-                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-slate-200 dark:border-dark-600 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
+                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-gray-300 dark:border-dark-600 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
               >
                 <FiGithub size={15} />
               </a>
@@ -622,7 +622,7 @@ const Login = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn"
-                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-slate-200 dark:border-dark-600 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
+                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-gray-300 dark:border-dark-600 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
               >
                 <FiLinkedin size={15} />
               </a>
@@ -631,7 +631,7 @@ const Login = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Discord"
-                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-slate-200 dark:border-dark-600 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
+                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-gray-300 dark:border-dark-600 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm"
               >
                 <FiMessageSquare size={15} />
               </a>
@@ -639,7 +639,7 @@ const Login = () => {
                 type="button"
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 aria-label="Back to Top"
-                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-slate-200 dark:border-dark-600 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm ml-0.5"
+                className="w-8 h-8 rounded-lg bg-white dark:bg-dark-700 border border-gray-300 dark:border-dark-600 text-gray-700 dark:text-gray-300 hover:text-white hover:bg-[#ca0019] hover:border-[#ca0019] flex items-center justify-center transition-all duration-200 shadow-sm ml-0.5"
               >
                 <FiArrowUp size={15} />
               </button>
@@ -647,8 +647,8 @@ const Login = () => {
           </div>
 
           {/* Bottom Copyright - Reduced compact spacing */}
-          <div className="pt-2.5 sm:pt-3 text-center text-xs text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} <strong className="text-slate-700 dark:text-slate-200 font-semibold">TeamUp</strong>
+          <div className="pt-2.5 sm:pt-3 text-center text-xs text-gray-600 dark:text-gray-400 font-medium">
+            © {new Date().getFullYear()} <strong className="text-gray-900 dark:text-gray-200 font-semibold">TeamUp</strong>
           </div>
         </div>
       </footer>
