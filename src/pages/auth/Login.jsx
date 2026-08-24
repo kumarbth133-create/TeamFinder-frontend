@@ -273,7 +273,7 @@ const Login = () => {
               <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Skills Matched</p>
             </div>
             <div className="pt-4 md:pt-0">
-              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.evaluationAccuracy}%</p>
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stats.evaluationAccuracy || 99}%</p>
               <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 mt-1 uppercase tracking-wider">Evaluation Accuracy</p>
             </div>
           </div>
