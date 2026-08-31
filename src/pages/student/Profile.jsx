@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import API from "../../api/axios";
 import toast from "react-hot-toast";
@@ -61,6 +61,40 @@ const Profile = () => {
     }
   };
 
+  // Helper to resize & compress image to high-quality compact data URL
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (readerEvent) => {
+        const image = new Image();
+        image.onload = () => {
+          const maxDim = 500;
+          let width = image.width;
+          let height = image.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(image, 0, 0, width, height);
+          resolve(canvas.toDataURL("image/jpeg", 0.85));
+        };
+        image.src = readerEvent.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handlePictureUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -69,34 +103,56 @@ const Profile = () => {
       return toast.error("Please select a valid image file (PNG, JPG, WEBP)");
     }
 
-    if (file.size > 10 * 1024 * 1024) {
-      return toast.error("Image size should be less than 10MB");
+    if (file.size > 15 * 1024 * 1024) {
+      return toast.error("Image size should be less than 15MB");
     }
 
     // Instant local preview
     const localUrl = URL.createObjectURL(file);
     setPreviewSrc(localUrl);
-
     setUploading(true);
-    const fd = new FormData();
-    fd.append("profilePicture", file);
 
     try {
-      const { data } = await API.post("/users/upload-picture", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+      // Step 1: Try server upload endpoint (Cloudinary)
+      const fd = new FormData();
+      fd.append("profilePicture", file);
+
+      try {
+        const { data } = await API.post("/users/upload-picture", fd, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        if (data.data?.profilePicture) {
+          updateUser(data.data);
+          setFormData((prev) => ({ ...prev, profilePicture: data.data.profilePicture }));
+          toast.success("Profile picture updated! 🎉");
+          return;
+        }
+      } catch (uploadErr) {
+        console.warn(
+          "Direct upload endpoint note:",
+          uploadErr?.response?.data?.message || uploadErr.message
+        );
+      }
+
+      // Step 2: Auto-fallback — compress image & update profile directly
+      const compressedDataUrl = await compressImage(file);
+      const { data } = await API.put("/users/profile", {
+        profilePicture: compressedDataUrl,
       });
+
       updateUser(data.data);
       setFormData((prev) => ({ ...prev, profilePicture: data.data.profilePicture }));
-      toast.success("Profile picture updated! 🎉");
+      toast.success("Profile picture updated successfully! 🎉");
     } catch (err) {
       setPreviewSrc(null);
-      toast.error(err.response?.data?.message || "Image upload failed");
+      toast.error(err.response?.data?.message || "Image upload failed. Please try again.");
     } finally {
       setUploading(false);
     }
   };
 
   const currentDisplayPicture = previewSrc || user?.profilePicture || formData.profilePicture;
+
 
   return (
     <MainLayout>
