@@ -7,11 +7,15 @@ import EmptyState from "../../components/common/EmptyState";
 import { toast } from "react-hot-toast";
 import {
   FiSearch, FiBookOpen, FiPlay, FiYoutube, FiClock,
-  FiStar, FiExternalLink, FiX, FiLayers, FiLock, FiCheckCircle, FiShield, FiCheck, FiSmartphone, FiCreditCard
+  FiStar, FiExternalLink, FiX, FiLayers, FiLock, FiCheckCircle, FiShield, FiCheck, FiSmartphone, FiCreditCard,
+  FiList, FiChevronRight, FiChevronLeft
 } from "react-icons/fi";
+
+import { DEFAULT_COURSES } from "../../data/coursesData";
 
 const SUBJECT_CATEGORIES = [
   "All",
+  "SQL",
   "HTML",
   "CSS",
   "JavaScript",
@@ -26,11 +30,12 @@ const SUBJECT_CATEGORIES = [
 ];
 
 const Courses = () => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState(() => DEFAULT_COURSES);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [activeSubject, setActiveSubject] = useState("All");
   const [activeVideoModal, setActiveVideoModal] = useState(null);
+  const [activeModalLessonIndex, setActiveModalLessonIndex] = useState(0);
   const [premiumModal, setPremiumModal] = useState(null);
   const [unlockedCourses, setUnlockedCourses] = useState([]);
   const [unlocking, setUnlocking] = useState(false);
@@ -40,17 +45,42 @@ const Courses = () => {
   const [upiId, setUpiId] = useState("8092726161@paytm");
   const [phoneNumber, setPhoneNumber] = useState("8092726161");
 
+  const getFilteredFallbackCourses = (subject, searchKeyword) => {
+    return DEFAULT_COURSES.filter((c) => {
+      const matchSubject = !subject || subject === "All" || c.subject?.toLowerCase() === subject.toLowerCase();
+      const matchSearch = !searchKeyword ||
+        c.title?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        c.subject?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        c.description?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        c.tags?.some(t => t.toLowerCase().includes(searchKeyword.toLowerCase()));
+      return matchSubject && matchSearch;
+    });
+  };
+
   const fetchCourses = async (params = {}) => {
     setLoading(true);
+    const targetSubject = params.subject !== undefined ? params.subject : activeSubject;
+    const targetSearch = params.search !== undefined ? params.search : search;
     try {
       const query = new URLSearchParams();
-      if (params.search) query.append("search", params.search);
-      if (params.subject && params.subject !== "All") query.append("subject", params.subject);
+      if (targetSearch) query.append("search", targetSearch);
+      if (targetSubject && targetSubject !== "All") query.append("subject", targetSubject);
       const { data } = await API.get(`/courses?${query.toString()}`);
-      setCourses(data.data);
+      
+      let list = data.data || [];
+      if (list.length === 0) {
+        list = getFilteredFallbackCourses(targetSubject, targetSearch);
+      } else {
+        const hasSql = list.some(c => c.subject?.toUpperCase() === "SQL");
+        if (!hasSql && (targetSubject === "All" || targetSubject?.toUpperCase() === "SQL")) {
+          const sqlFallbacks = getFilteredFallbackCourses("SQL", targetSearch);
+          list = [...sqlFallbacks, ...list];
+        }
+      }
+      setCourses(list);
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to load courses");
+      console.warn("API load failed or offline, loading fallback courses", err);
+      setCourses(getFilteredFallbackCourses(targetSubject, targetSearch));
     } finally {
       setLoading(false);
     }
@@ -66,6 +96,7 @@ const Courses = () => {
   };
 
   const handleCourseClick = (course) => {
+    setActiveModalLessonIndex(0);
     if (course.isPremium && !unlockedCourses.includes(course._id)) {
       setPremiumModal(course);
       setUpiId("8092726161@paytm");
@@ -89,6 +120,7 @@ const Courses = () => {
       setUnlockedCourses((prev) => [...prev, course._id]);
       setUnlocking(false);
       setPremiumModal(null);
+      setActiveModalLessonIndex(0);
       setActiveVideoModal(course);
       const methodLabel = payMethod === "upi" ? `UPI (${upiId})` : `Mobile Pay (${phoneNumber})`;
       toast.success(`🎉 Payment of ₹${course.price || 149} Successful via ${methodLabel}! Course Unlocked.`);
@@ -97,6 +129,7 @@ const Courses = () => {
 
   const getSubjectColor = (subject) => {
     switch (subject?.toUpperCase()) {
+      case "SQL": return "bg-sky-500/15 text-sky-400 border-sky-500/40 font-bold";
       case "HTML": return "bg-orange-500/10 text-orange-400 border-orange-500/30";
       case "CSS": return "bg-primary-500/10 text-primary-400 border-blue-500/30";
       case "JAVASCRIPT": return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
@@ -268,12 +301,20 @@ const Courses = () => {
                         </span>
                       </div>
 
-                      <Link
-                        to={`/courses/${course._id}`}
-                        className="font-bold text-slate-900 dark:text-gray-100 group-hover:text-[#ca0019] transition text-sm line-clamp-2 block"
-                      >
-                        {course.title}
-                      </Link>
+                      <div className="flex items-center justify-between gap-2">
+                        <Link
+                          to={`/courses/${course._id}`}
+                          className="font-bold text-slate-900 dark:text-gray-100 group-hover:text-[#ca0019] transition text-sm line-clamp-2 block flex-1"
+                        >
+                          {course.title}
+                        </Link>
+                      </div>
+
+                      {course.playlist?.length > 0 && (
+                        <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[11px] font-semibold">
+                          <FiList size={12} /> {course.playlist.length} Lessons Playlist
+                        </div>
+                      )}
 
                       <p className="text-xs text-slate-600 dark:text-gray-400 line-clamp-2 leading-relaxed">
                         {course.description}
@@ -304,18 +345,16 @@ const Courses = () => {
                           onClick={() => handleCourseClick(course)}
                           className="btn-primary text-xs py-1.5 px-3 bg-[#ca0019] hover:bg-[#b00016] text-white flex items-center gap-1.5 shadow-sm"
                         >
-                          <FiPlay size={13} /> Watch Video
+                          <FiPlay size={13} /> Watch Playlist
                         </button>
                       )}
 
-                      <a
-                        href={course.youtubeUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-slate-500 dark:text-gray-400 hover:text-[#ca0019] flex items-center gap-1 transition"
+                      <Link
+                        to={`/courses/${course._id}`}
+                        className="text-xs text-slate-500 dark:text-gray-400 hover:text-[#ca0019] flex items-center gap-1 transition font-medium"
                       >
-                        YouTube <FiExternalLink size={12} />
-                      </a>
+                        Full Course <FiChevronRight size={13} />
+                      </Link>
                     </div>
                   </div>
                 );
@@ -438,55 +477,165 @@ const Courses = () => {
           </div>
         )}
 
-        {/* Video Player Modal */}
-        {activeVideoModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <div className="bg-dark-800 border border-dark-600 rounded-xl max-w-3xl w-full overflow-hidden shadow-2xl relative">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-dark-600 bg-dark-900">
-                <div className="flex items-center gap-2">
-                  <FiYoutube className="text-red-500" size={20} />
-                  <h3 className="font-bold text-gray-100 text-sm truncate max-w-md">
-                    {activeVideoModal.title}
-                  </h3>
-                </div>
-                <button
-                  onClick={() => setActiveVideoModal(null)}
-                  className="text-gray-400 hover:text-white p-1"
-                >
-                  <FiX size={20} />
-                </button>
-              </div>
+        {/* Video Player Modal with Playlist support */}
+        {activeVideoModal && (() => {
+          const playlist = activeVideoModal.playlist?.length > 0
+            ? activeVideoModal.playlist
+            : [{
+                lessonNumber: 1,
+                title: activeVideoModal.title,
+                duration: activeVideoModal.duration,
+                youtubeEmbedId: activeVideoModal.youtubeEmbedId,
+                youtubeUrl: activeVideoModal.youtubeUrl,
+              }];
+          const currentLesson = playlist[activeModalLessonIndex] || playlist[0];
 
-              {/* Responsive Video Embed */}
-              <div className="relative aspect-video bg-black">
-                <iframe
-                  src={`https://www.youtube.com/embed/${activeVideoModal.youtubeEmbedId}?autoplay=1`}
-                  title={activeVideoModal.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="w-full h-full border-0"
-                />
-              </div>
-
-              <div className="p-4 flex items-center justify-between bg-dark-800 text-xs">
-                <div>
-                  <span className="text-gray-400">Subject: </span>
-                  <span className="font-bold text-white mr-3">{activeVideoModal.subject}</span>
-                  <span className="text-gray-400">Instructor: </span>
-                  <span className="font-medium text-red-400">{activeVideoModal.instructor}</span>
+          return (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+              <div className="bg-dark-800 border border-dark-600 rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[90vh]">
+                {/* Modal Header */}
+                <div className="flex items-center justify-between px-5 py-3 border-b border-dark-600 bg-dark-900">
+                  <div className="flex items-center gap-2 min-w-0 pr-4">
+                    <FiYoutube className="text-red-500 shrink-0" size={20} />
+                    <div className="min-w-0">
+                      <h3 className="font-bold text-gray-100 text-sm truncate">
+                        {currentLesson.title || activeVideoModal.title}
+                      </h3>
+                      <p className="text-[11px] text-gray-400 truncate">
+                        Course: {activeVideoModal.title} • {activeVideoModal.instructor}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setActiveVideoModal(null)}
+                    className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-dark-700 transition shrink-0"
+                  >
+                    <FiX size={20} />
+                  </button>
                 </div>
-                <a
-                  href={activeVideoModal.youtubeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-secondary text-xs flex items-center gap-1.5"
-                >
-                  Open on YouTube <FiExternalLink size={13} />
-                </a>
+
+                {/* Main Modal Body: Video + Playlist Drawer */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 overflow-y-auto flex-1 bg-dark-950">
+                  {/* Video Area (2 cols on large) */}
+                  <div className="lg:col-span-2 flex flex-col bg-black">
+                    <div className="relative aspect-video w-full bg-black">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${currentLesson.youtubeEmbedId}?autoplay=1`}
+                        title={currentLesson.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="w-full h-full border-0"
+                      />
+                    </div>
+
+                    {/* Quick navigation controls */}
+                    <div className="p-3 bg-dark-900/90 border-t border-dark-700 flex items-center justify-between text-xs">
+                      <button
+                        disabled={activeModalLessonIndex === 0}
+                        onClick={() => setActiveModalLessonIndex((prev) => Math.max(0, prev - 1))}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border font-semibold transition ${
+                          activeModalLessonIndex === 0
+                            ? "opacity-40 cursor-not-allowed border-dark-700 text-gray-500"
+                            : "border-dark-600 text-gray-200 hover:bg-dark-800 hover:border-red-500/50"
+                        }`}
+                      >
+                        <FiChevronLeft size={14} /> Previous Lesson
+                      </button>
+
+                      <span className="text-[11px] text-gray-400 font-medium">
+                        Lesson {activeModalLessonIndex + 1} of {playlist.length}
+                      </span>
+
+                      <button
+                        disabled={activeModalLessonIndex >= playlist.length - 1}
+                        onClick={() => setActiveModalLessonIndex((prev) => Math.min(playlist.length - 1, prev + 1))}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border font-semibold transition ${
+                          activeModalLessonIndex >= playlist.length - 1
+                            ? "opacity-40 cursor-not-allowed border-dark-700 text-gray-500"
+                            : "border-dark-600 text-gray-200 hover:bg-dark-800 hover:border-red-500/50"
+                        }`}
+                      >
+                        Next Lesson <FiChevronRight size={14} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Playlist Sidebar */}
+                  <div className="lg:col-span-1 border-t lg:border-t-0 lg:border-l border-dark-700 bg-dark-900 flex flex-col max-h-[350px] lg:max-h-none overflow-hidden">
+                    <div className="p-3 border-b border-dark-700 flex items-center justify-between bg-dark-850">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-gray-200">
+                        <FiList className="text-red-400" size={14} />
+                        <span>Playlist ({playlist.length} Videos)</span>
+                      </div>
+                      <span className="text-[10px] bg-red-950/60 text-red-400 px-2 py-0.5 rounded border border-red-800/40 font-semibold">
+                        {activeVideoModal.subject}
+                      </span>
+                    </div>
+
+                    <div className="overflow-y-auto flex-1 p-2 space-y-1.5 scrollbar-thin">
+                      {playlist.map((item, idx) => {
+                        const isActive = idx === activeModalLessonIndex;
+                        return (
+                          <button
+                            key={idx}
+                            onClick={() => setActiveModalLessonIndex(idx)}
+                            className={`w-full text-left p-2.5 rounded-xl border transition flex items-start gap-2.5 ${
+                              isActive
+                                ? "bg-red-950/50 border-red-600 text-white shadow-md shadow-red-900/20"
+                                : "bg-dark-800/60 border-dark-700 text-gray-300 hover:bg-dark-800 hover:border-dark-600"
+                            }`}
+                          >
+                            <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-[11px] font-bold shrink-0 mt-0.5 ${
+                              isActive ? "bg-red-600 text-white" : "bg-dark-700 text-gray-400"
+                            }`}>
+                              {isActive ? <FiPlay size={11} className="fill-white" /> : idx + 1}
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <p className={`text-xs font-semibold line-clamp-2 leading-snug ${isActive ? "text-red-300" : "text-gray-200"}`}>
+                                {item.title}
+                              </p>
+                              <div className="flex items-center gap-2 mt-1 text-[10px] text-gray-400">
+                                <span className="flex items-center gap-1"><FiClock size={10} /> {item.duration || "20 Min"}</span>
+                                {isActive && <span className="text-red-400 font-bold">• Now Playing</span>}
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Modal Footer */}
+                <div className="p-3 px-5 flex items-center justify-between bg-dark-900 border-t border-dark-700 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-400">Category: </span>
+                    <span className="font-bold text-white mr-2">{activeVideoModal.subject}</span>
+                    <span className="text-gray-400 hidden sm:inline">Level: </span>
+                    <span className="font-medium text-amber-400 hidden sm:inline">{activeVideoModal.level}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to={`/courses/${activeVideoModal._id}`}
+                      className="btn-primary text-xs py-1.5 px-3 bg-red-600 hover:bg-red-500 text-white flex items-center gap-1.5"
+                    >
+                      <FiBookOpen size={13} /> Full Curriculum Page
+                    </Link>
+                    <a
+                      href={currentLesson.youtubeUrl || activeVideoModal.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-secondary text-xs py-1.5 px-3 flex items-center gap-1.5"
+                    >
+                      YouTube <FiExternalLink size={12} />
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     </MainLayout>
   );
